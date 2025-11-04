@@ -105,11 +105,30 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     return true;
   }
 
-  
-
   if (message.type === 'GAME_DESTROY_BLOCK') {
     tabSocket.socket.emit('destroyBlock', message.id);
     console.log('[Game Background] Tab', tabId, 'destroyed block:', message.id);
+    sendResponse({ success: true });
+    return true;
+  }
+
+  if (message.type === 'GAME_PLAYER_DIED') {
+    tabSocket.socket.emit('playerDied', { killerId: message.killerId });
+    console.log('[Game Background] Tab', tabId, 'player died, killer:', message.killerId);
+    sendResponse({ success: true });
+    return true;
+  }
+
+  if (message.type === 'GAME_PLAYER_RESPAWNED') {
+    tabSocket.socket.emit('playerRespawned');
+    console.log('[Game Background] Tab', tabId, 'player respawned');
+    sendResponse({ success: true });
+    return true;
+  }
+
+  if (message.type === 'GAME_REQUEST_GLOBAL_STATS') {
+    tabSocket.socket.emit('requestGlobalStats', { playerName: message.playerName });
+    console.log('[Game Background] Tab', tabId, 'requesting global stats for:', message.playerName);
     sendResponse({ success: true });
     return true;
   }
@@ -239,6 +258,41 @@ async function createSocketForTab(tabId) {
   socket.on('blockDestroyed', (id) => {
     console.log('[Game Background] Tab', tabId, 'block destroyed:', id);
     sendToTab(tabId, { type: 'GAME_BLOCK_DESTROYED', id });
+  });
+
+  socket.on('playerKilled', (data) => {
+    console.log('[Game Background] Tab', tabId, 'player killed:', data);
+    sendToTab(tabId, { type: 'GAME_PLAYER_KILLED', ...data });
+  });
+
+  socket.on('playerStats', (stats) => {
+    console.log('[Game Background] Tab', tabId, 'received player stats');
+    sendToTab(tabId, { type: 'GAME_PLAYER_STATS', stats });
+  });
+
+  socket.on('matchEnded', (data) => {
+    console.log('[Game Background] Tab', tabId, 'match ended:', data);
+    sendToTab(tabId, { type: 'GAME_MATCH_ENDED', ...data });
+  });
+
+  socket.on('globalStats', (stats) => {
+    console.log('[Game Background] Tab', tabId, 'received global stats:', stats);
+    sendToTab(tabId, { type: 'GAME_GLOBAL_STATS', stats });
+  });
+
+  socket.on('playerRespawned', (playerId) => {
+    console.log('[Game Background] Tab', tabId, 'player respawned:', playerId);
+    sendToTab(tabId, { type: 'GAME_PLAYER_RESPAWNED', id: playerId });
+  });
+
+  socket.on('matchRestarting', (data) => {
+    console.log('[Game Background] Tab', tabId, 'match restarting in', data.countdown, 'seconds');
+    sendToTab(tabId, { type: 'GAME_MATCH_RESTARTING', countdown: data.countdown });
+  });
+
+  socket.on('matchRestarted', () => {
+    console.log('[Game Background] Tab', tabId, 'match restarted');
+    sendToTab(tabId, { type: 'GAME_MATCH_RESTARTED' });
   });
 }
 

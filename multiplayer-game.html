@@ -238,6 +238,218 @@
       border-bottom: 1px solid rgba(255, 255, 255, 0.2);
     }
 
+    #leaderboard {
+      position: fixed;
+      top: 60px;
+      right: -280px;
+      background: rgba(0, 0, 0, 0.9);
+      padding: 15px;
+      border-radius: 10px 0 0 10px;
+      color: white;
+      min-width: 250px;
+      max-height: 400px;
+      overflow-y: auto;
+      pointer-events: all;
+      border: 2px solid #ffaa00;
+      border-right: none;
+      transition: right 0.3s ease-in-out;
+      z-index: 1500;
+    }
+
+    #leaderboard.visible {
+      right: 0;
+    }
+
+    #leaderboard h3 {
+      margin: 0 0 10px 0;
+      font-size: 16px;
+      color: #ffaa00;
+      text-align: center;
+      font-weight: bold;
+    }
+
+    .leaderboard-item {
+      display: flex;
+      justify-content: space-between;
+      padding: 8px;
+      margin: 5px 0;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 5px;
+      font-size: 12px;
+    }
+
+    .leaderboard-item.me {
+      background: rgba(102, 126, 234, 0.3);
+      border: 1px solid #667eea;
+    }
+
+    .leaderboard-name {
+      font-weight: bold;
+      color: white;
+      flex: 1;
+    }
+
+    .leaderboard-stats {
+      display: flex;
+      gap: 10px;
+      color: #ccc;
+    }
+
+    .leaderboard-kills {
+      color: #44ff88;
+    }
+
+    .leaderboard-deaths {
+      color: #ff4444;
+    }
+
+    .leaderboard-kd {
+      color: #ffaa00;
+      font-weight: bold;
+    }
+
+    #kill-notification {
+      position: fixed;
+      top: 20%;
+      left: 50%;
+      transform: translateX(-50%);
+      background: linear-gradient(135deg, rgba(102, 126, 234, 0.95) 0%, rgba(118, 75, 162, 0.95) 100%);
+      color: white;
+      padding: 20px 40px;
+      border-radius: 10px;
+      font-size: 24px;
+      font-weight: bold;
+      display: none;
+      z-index: 2000;
+      box-shadow: 0 5px 30px rgba(0, 0, 0, 0.5);
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      animation: slideDown 0.3s ease-out;
+      text-align: center;
+      min-width: 300px;
+    }
+
+    #kill-notification.kill {
+      background: linear-gradient(135deg, rgba(68, 255, 136, 0.95) 0%, rgba(34, 139, 34, 0.95) 100%);
+      border-color: #44ff88;
+    }
+
+    #kill-notification.death {
+      background: linear-gradient(135deg, rgba(255, 68, 68, 0.95) 0%, rgba(139, 34, 34, 0.95) 100%);
+      border-color: #ff4444;
+    }
+
+    #kill-notification .kill-icon {
+      font-size: 40px;
+      margin-bottom: 10px;
+    }
+
+    @keyframes slideDown {
+      0% {
+        transform: translateX(-50%) translateY(-100px);
+        opacity: 0;
+      }
+      100% {
+        transform: translateX(-50%) translateY(0);
+        opacity: 1;
+      }
+    }
+
+    #match-end-screen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.95);
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 3000;
+    }
+
+    #match-end-screen h1 {
+      color: #ffaa00;
+      font-size: 64px;
+      margin-bottom: 30px;
+      text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.8);
+    }
+
+    #match-end-screen .winner {
+      color: white;
+      font-size: 32px;
+      margin-bottom: 40px;
+    }
+
+    #match-end-screen .final-stats {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 30px;
+      border-radius: 15px;
+      min-width: 400px;
+    }
+
+    #restart-countdown {
+      position: fixed;
+      bottom: 50px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(255, 170, 0, 0.95);
+      color: white;
+      padding: 20px 40px;
+      border-radius: 10px;
+      font-size: 24px;
+      font-weight: bold;
+      display: none;
+      z-index: 3500;
+      box-shadow: 0 0 20px rgba(255, 170, 0, 0.5);
+    }
+
+    #leaderboard-toggle {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      width: 40px;
+      height: 40px;
+      background: rgba(0, 0, 0, 0.7);
+      border: 2px solid #ffaa00;
+      border-radius: 8px;
+      cursor: pointer;
+      z-index: 2000;
+      pointer-events: all;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 4px;
+      transition: all 0.3s;
+    }
+
+    #leaderboard-toggle:hover {
+      background: rgba(255, 170, 0, 0.3);
+      transform: scale(1.1);
+    }
+
+    #leaderboard-toggle span {
+      display: block;
+      width: 24px;
+      height: 3px;
+      background: #ffaa00;
+      border-radius: 2px;
+      transition: all 0.3s;
+    }
+
+    #leaderboard-toggle.active span:nth-child(1) {
+      transform: translateY(7px) rotate(45deg);
+    }
+
+    #leaderboard-toggle.active span:nth-child(2) {
+      opacity: 0;
+    }
+
+    #leaderboard-toggle.active span:nth-child(3) {
+      transform: translateY(-7px) rotate(-45deg);
+    }
+
     #controls-help {
       position: fixed;
       bottom: 20px;
@@ -295,22 +507,31 @@
   
   <div id="loading">Loading game...</div>
 
-  
   <div id="ui">
-    
+
     <div id="hud">
       <div id="health" style="font-size: 20px; font-weight: bold; color: #00ff00;">HP: 100</div>
       <div id="character-name" style="margin-top: 5px;">Character: None</div>
+      <div id="player-stats" style="margin-top: 5px; color: #ffaa00; font-size: 14px;">K/D: 0.00 | Global: 0.00</div>
       <div id="player-count" style="margin-top: 10px; color: #44ff88; font-weight: bold;">Players Online: 1</div>
     </div>
 
-    
+    <div id="leaderboard-toggle">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+
+    <div id="leaderboard">
+      <h3>LEADERBOARD</h3>
+      <div id="leaderboard-list"></div>
+    </div>
+
     <div id="player-list">
       <h3>Players Online</h3>
       <div id="players"></div>
     </div>
 
-    
     <div id="controls-help">
       <div><strong>Controls:</strong></div>
       <div>WASD - Move</div>
@@ -322,15 +543,23 @@
       <div>ESC - Cancel Build</div>
     </div>
 
-    
     <div id="crosshair"></div>
+
+    <div id="kill-notification"></div>
   </div>
 
-  
-  
+  <div id="match-end-screen">
+    <h1>MATCH OVER!</h1>
+    <div class="winner" id="winner-text"></div>
+    <div class="final-stats" id="final-stats"></div>
+  </div>
+
+  <div id="restart-countdown"></div>
+
   <div id="name-input-screen">
     <h1>🎮 3D MULTIPLAYER ARENA 🎮</h1>
     <p>Enter your name to track your stats across games</p>
+    <p style="color: #ffaa00; font-size: 14px; margin-top: -30px;">Your K/D ratio will be saved globally!</p>
     <input type="text" id="player-name-input" placeholder="Enter your name..." maxlength="20" />
     <button id="name-submit-btn">START GAME</button>
   </div>
@@ -440,7 +669,6 @@
     await import('/content/d9f5134fdd4a1ae7a5c3fe1b42876cc4e18f4ce404a39394f9157679c60e965fi0');
     await import('/content/183616632d0baeeaf8bc7bbda1766ea1fb19e76f63fdf136456e075bf19ed08di0');
 
-
     await new Promise(resolve => {
       if (window.CANNON) {
         resolve();
@@ -453,7 +681,6 @@
         }, 100);
       }
     });
-
 
     class SeededRandom {
       constructor(seed) {
@@ -469,7 +696,6 @@
     const TERRAIN_SEED = 12345;
     const seededRandom = new SeededRandom(TERRAIN_SEED);
 
-
     let scene, camera, renderer;
     let world; 
     let myPlayer = null;
@@ -480,13 +706,18 @@
     let blocks = new Map();
     let bullets = [];
 
-    
     let keys = {};
     let selectedCharacter = null;
     let isCharacterSelected = false;
     let connected = false;
-    let playerName = null; 
-    let playerStats = { kills: 0, deaths: 0, score: 0 }; 
+    let playerName = null;
+    let playerStats = { kills: 0, deaths: 0, score: 0 };
+    let globalStats = { kills: 0, deaths: 0 };
+    let allPlayerStats = new Map();
+    let matchEnded = false;
+    let isDead = false;
+    let deathMarker = null;
+    let allDeathMarkers = new Map(); 
 
     
     let cameraYaw = 0; 
@@ -712,6 +943,39 @@
           console.log('[Game] Received GAME_BLOCK_DESTROYED:', message.id);
           destroyBlock(message.id);
           break;
+
+        case 'GAME_PLAYER_KILLED':
+          console.log('[Game] GAME_PLAYER_KILLED received:', message);
+          handlePlayerKilled(message.killerId, message.victimId, message.killerName, message.victimName);
+          break;
+
+        case 'GAME_PLAYER_STATS':
+          console.log('[Game] GAME_PLAYER_STATS received:', message.stats);
+          updateAllPlayerStats(message.stats);
+          break;
+
+        case 'GAME_MATCH_ENDED':
+          handleMatchEnd(message.winner, message.stats);
+          break;
+
+        case 'GAME_GLOBAL_STATS':
+          globalStats = message.stats || { kills: 0, deaths: 0 };
+          console.log('[Game] Received global stats:', globalStats);
+          updatePlayerStatsDisplay();
+          updateLeaderboard();
+          break;
+
+        case 'GAME_PLAYER_RESPAWNED':
+          handlePlayerRespawned(message.id);
+          break;
+
+        case 'GAME_MATCH_RESTARTING':
+          showRestartCountdown(message.countdown);
+          break;
+
+        case 'GAME_MATCH_RESTARTED':
+          handleMatchRestart();
+          break;
       }
     });
 
@@ -743,12 +1007,35 @@
         if (e.key === 'Enter') submitName();
       });
 
-      
       document.querySelectorAll('.character-btn').forEach(btn => {
         btn.addEventListener('click', () => {
           const character = btn.getAttribute('data-character');
           selectCharacter(character);
         });
+      });
+
+      const leaderboardToggle = document.getElementById('leaderboard-toggle');
+      const leaderboard = document.getElementById('leaderboard');
+      let leaderboardVisible = false;
+
+      leaderboardToggle.addEventListener('click', () => {
+        leaderboardVisible = !leaderboardVisible;
+
+        if (leaderboardVisible) {
+          leaderboard.classList.add('visible');
+          leaderboardToggle.classList.add('active');
+        } else {
+          leaderboard.classList.remove('visible');
+          leaderboardToggle.classList.remove('active');
+        }
+      });
+
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && leaderboardVisible) {
+          leaderboardVisible = false;
+          leaderboard.classList.remove('visible');
+          leaderboardToggle.classList.remove('active');
+        }
       });
 
       
@@ -894,7 +1181,6 @@
       groundBody.quaternion.setFromAxisAngle(new CANNON.Vec3(1, 0, 0), -Math.PI / 2);
       world.addBody(groundBody);
 
-
       for (let i = 0; i < 200; i++) {
         const grass = new THREE.Mesh(
           new THREE.BoxGeometry(0.1, 0.5, 0.1),
@@ -1012,7 +1298,6 @@
       for (let i = 0; i < 30; i++) {
         const tree = new THREE.Group();
 
-
         const trunk = new THREE.Mesh(
           new THREE.CylinderGeometry(0.3, 0.4, 3, 8),
           new THREE.MeshStandardMaterial({ color: 0x8b4513 })
@@ -1020,7 +1305,6 @@
         trunk.position.y = 1.5;
         trunk.castShadow = true;
         tree.add(trunk);
-
 
         const leaves = new THREE.Mesh(
           new THREE.SphereGeometry(1.5, 8, 8),
@@ -1202,25 +1486,26 @@
       console.log('[Game] Player physics body created');
       console.log('[Game] Mouse controls enabled - move mouse to aim');
 
-      
       try {
         await sendToExtension('GAME_SELECT_CHARACTER', { character });
         console.log('[Game] Selected:', character);
 
-        
         if (playerName) {
           await sendToExtension('GAME_SET_PLAYER_NAME', { playerName });
           console.log('[Game] Sent player name to backend:', playerName);
+
+          await sendToExtension('GAME_REQUEST_GLOBAL_STATS', { playerName });
+          console.log('[Game] Requested global stats for:', playerName);
         }
 
-        
         const displayName = CHARACTER_NAMES[character] || character;
         document.getElementById('character-name').textContent = `${displayName}`;
+
+        updateLeaderboard();
       } catch (error) {
         console.error('[Game] Failed to select character:', error);
       }
     }
-
 
     function updateGameState(state) {
 
@@ -1233,7 +1518,7 @@
           }
 
           if (!players.has(p.id)) {
-            addPlayer(p.id, p.character);
+            addPlayer(p.id, p.character, p.name);
           }
           updatePlayerPosition(p.id, p.position, p.rotation);
         });
@@ -1249,7 +1534,12 @@
         });
       }
 
+      if (state.stats) {
+        updateAllPlayerStats(state.stats);
+      }
+
       updatePlayerList();
+      updateLeaderboard();
     }
 
     async function addPlayer(id, character, playerName = null) {
@@ -1383,9 +1673,8 @@
       console.log('[Game] Player count updated:', totalPlayers);
     }
 
-    
     function updateMovement() {
-      if (!myPlayerBody || !isCharacterSelected) return;
+      if (!myPlayerBody || !isCharacterSelected || isDead || matchEnded) return;
 
       
       const edgeRotationSpeed = 0.02; 
@@ -1525,10 +1814,10 @@
       }
     }
 
-    
     function shoot() {
-      if (!myPlayer || !isCharacterSelected || !connected) {
-        console.log('[Game] Cannot shoot - myPlayer:', !!myPlayer, 'isCharacterSelected:', isCharacterSelected, 'connected:', connected);
+      if (!myPlayer || !isCharacterSelected || !connected || isDead || matchEnded) {
+        if (isDead) console.log('[Game] Cannot shoot - player is dead');
+        if (matchEnded) console.log('[Game] Cannot shoot - match has ended');
         return;
       }
 
@@ -1645,29 +1934,30 @@
       bulletBody.addEventListener('collide', (event) => {
         const hitBody = event.body;
 
-        
         if (hitBody === myPlayerBody) {
-          
+
           const bulletOwnerId = data.ownerId || data.playerId || data.socketId;
           if (bulletOwnerId === mySocketId) {
             console.log('[Game] Skipping self-damage from own bullet (ownerId:', bulletOwnerId, ')');
             return;
           }
 
-          
-          myHealth -= bulletDamage; 
+          if (isDead) {
+            console.log('[Game] Already dead, ignoring bullet');
+            return;
+          }
+
+          myHealth -= bulletDamage;
           updateHealthDisplay();
           console.log('[Game] Hit by bullet! Damage:', bulletDamage, 'Health:', myHealth, 'Shooter:', bulletOwnerId);
 
-          
           world.removeBody(bulletBody);
           scene.remove(bullet);
           const bulletIndex = bullets.findIndex(b => b.userData.body === bulletBody);
           if (bulletIndex !== -1) bullets.splice(bulletIndex, 1);
 
-          
           if (myHealth <= 0) {
-            handlePlayerDeath();
+            handlePlayerDeath(bulletOwnerId);
           }
           return;
         }
@@ -1758,41 +2048,385 @@
       const healthEl = document.getElementById('health');
       healthEl.textContent = `HP: ${myHealth}`;
 
-      
       if (myHealth > 70) {
-        healthEl.style.color = '#00ff00'; 
+        healthEl.style.color = '#00ff00';
       } else if (myHealth > 30) {
-        healthEl.style.color = '#ffaa00'; 
+        healthEl.style.color = '#ffaa00';
       } else {
-        healthEl.style.color = '#ff0000'; 
+        healthEl.style.color = '#ff0000';
       }
     }
 
-    function handlePlayerDeath() {
-      console.log('[Game] You died! Respawning...');
+    function updatePlayerStatsDisplay() {
+      const statsEl = document.getElementById('player-stats');
+      const currentKD = (playerStats.kills / Math.max(1, playerStats.deaths)).toFixed(2);
+      const globalKD = (globalStats.kills / Math.max(1, globalStats.deaths)).toFixed(2);
+      statsEl.textContent = `K/D: ${currentKD} (${playerStats.kills}/${playerStats.deaths}) | Global: ${globalKD} (${globalStats.kills}/${globalStats.deaths})`;
+    }
 
-      
+    function handlePlayerDeath(killerId = null) {
+      console.log('[Game] You died! Killed by:', killerId);
+
+      isDead = true;
       playerStats.deaths += 1;
+      updatePlayerStatsDisplay();
 
-      
-      alert(`💀 YOU DIED! 💀\n\nKills: ${playerStats.kills}\nDeaths: ${playerStats.deaths}\nScore: ${playerStats.score}\nK/D Ratio: ${(playerStats.kills / Math.max(1, playerStats.deaths)).toFixed(2)}\n\nRespawning...`);
+      console.log('[Game] Sending GAME_PLAYER_DIED to backend with killerId:', killerId);
+      sendToExtension('GAME_PLAYER_DIED', { killerId }).catch(() => {});
 
-      
-      myHealth = 100;
+      createDeathMarker(myPlayer.position);
+
+      setTimeout(() => {
+        respawnPlayer();
+      }, 3000);
+    }
+
+    function respawnPlayer() {
+      console.log('[Game] Respawning...');
+
+      myHealth = CHARACTER_CONFIG[selectedCharacter].health;
       updateHealthDisplay();
+      isDead = false;
 
-      
+      if (deathMarker) {
+        console.log('[Game] Removing YOUR death marker on respawn');
+        scene.remove(deathMarker);
+        deathMarker = null;
+      }
+
       const respawnX = Math.random() * 40 - 20;
       const respawnZ = Math.random() * 40 - 20;
 
       if (myPlayer) {
         myPlayer.position.set(respawnX, 1, respawnZ);
+        myPlayer.visible = true;
       }
 
       if (myPlayerBody) {
         myPlayerBody.position.set(respawnX, 1, respawnZ);
-        myPlayerBody.velocity.set(0, 0, 0); 
+        myPlayerBody.velocity.set(0, 0, 0);
       }
+
+      sendToExtension('GAME_PLAYER_RESPAWNED').catch(() => {});
+    }
+
+    function createDeathMarker(position) {
+
+      const group = new THREE.Group();
+
+      const xSize = 2;
+      const xThickness = 0.2;
+
+      const xMaterial = new THREE.MeshBasicMaterial({ color: 0xff0000, side: THREE.DoubleSide });
+
+      const bar1 = new THREE.Mesh(
+        new THREE.BoxGeometry(xSize, xThickness, xThickness),
+        xMaterial
+      );
+      bar1.rotation.z = Math.PI / 4;
+      group.add(bar1);
+
+      const bar2 = new THREE.Mesh(
+        new THREE.BoxGeometry(xSize, xThickness, xThickness),
+        xMaterial
+      );
+      bar2.rotation.z = -Math.PI / 4;
+      group.add(bar2);
+
+      group.position.set(position.x, position.y + 1.5, position.z);
+      scene.add(group);
+
+      if (myPlayer && position === myPlayer.position) {
+        myPlayer.visible = false;
+        deathMarker = group;
+      }
+
+      return group;
+    }
+
+    function handlePlayerKilled(killerId, victimId, killerName, victimName) {
+      console.log('[Game] Player killed:', victimName, 'by', killerName, 'My ID:', mySocketId, 'Killer ID:', killerId, 'Victim ID:', victimId);
+
+      if (killerId === mySocketId) {
+        playerStats.kills += 1;
+        updatePlayerStatsDisplay();
+        showKillNotification(`YOU ELIMINATED ${victimName}!`, 'kill');
+      } else if (victimId === mySocketId) {
+        showKillNotification(`ELIMINATED BY ${killerName}!`, 'death');
+      } else {
+        showKillNotification(`${killerName} eliminated ${victimName}`, 'neutral');
+      }
+
+      const victim = players.get(victimId);
+      if (victim && victim.model) {
+        console.log('[Game] Creating death marker for player:', victimId);
+        const deathX = createDeathMarker(victim.model.position);
+        victim.model.visible = false;
+
+        
+
+        const markerKey = `${victimId}_${Date.now()}`;
+        allDeathMarkers.set(markerKey, deathX);
+        victim.deathMarker = deathX;
+        victim.deathMarkerKey = markerKey;
+
+        console.log('[Game] Death marker created and assigned to player:', victimId, 'Key:', markerKey);
+
+        
+
+        setTimeout(() => {
+          console.log('[Game] Auto-removing death marker (timer cleanup):', markerKey);
+          if (allDeathMarkers.has(markerKey)) {
+            const marker = allDeathMarkers.get(markerKey);
+            scene.remove(marker);
+            allDeathMarkers.delete(markerKey);
+            console.log('[Game] Death marker removed from scene. Remaining markers:', allDeathMarkers.size);
+          }
+          
+
+          if (victim.deathMarker === deathX) {
+            victim.deathMarker = null;
+            victim.deathMarkerKey = null;
+          }
+        }, 4000);
+      } else {
+        console.log('[Game] Could not create death marker - victim not found in players map:', victimId);
+      }
+
+      updateLeaderboard();
+    }
+
+    function handlePlayerRespawned(playerId) {
+      console.log('[Game] handlePlayerRespawned called for:', playerId);
+      const player = players.get(playerId);
+      if (player) {
+        console.log('[Game] Player found, making visible. Has death marker?', !!player.deathMarker);
+        player.model.visible = true;
+
+        
+
+        if (player.deathMarker) {
+          console.log('[Game] Removing death marker for player (respawn event):', playerId);
+          scene.remove(player.deathMarker);
+
+          
+
+          if (player.deathMarkerKey && allDeathMarkers.has(player.deathMarkerKey)) {
+            allDeathMarkers.delete(player.deathMarkerKey);
+            console.log('[Game] Death marker removed from global map. Remaining:', allDeathMarkers.size);
+          }
+
+          player.deathMarker = null;
+          player.deathMarkerKey = null;
+        }
+      } else {
+        console.log('[Game] Player not found in players map:', playerId);
+      }
+    }
+
+    function showKillNotification(text, type = 'neutral') {
+      const notif = document.getElementById('kill-notification');
+
+      
+
+      notif.className = '';
+
+      
+
+      if (type === 'kill') {
+        notif.classList.add('kill');
+        notif.innerHTML = `<div class="kill-icon">⚔️</div><div>${text}</div>`;
+      } else if (type === 'death') {
+        notif.classList.add('death');
+        notif.innerHTML = `<div class="kill-icon">💀</div><div>${text}</div>`;
+      } else {
+        notif.innerHTML = `<div class="kill-icon">⚡</div><div>${text}</div>`;
+      }
+
+      notif.style.display = 'block';
+
+      
+
+      notif.style.animation = 'none';
+      setTimeout(() => {
+        notif.style.animation = 'slideDown 0.3s ease-out';
+      }, 10);
+
+      setTimeout(() => {
+        notif.style.display = 'none';
+      }, 2500);
+    }
+
+    function updateAllPlayerStats(stats) {
+      console.log('[Game] updateAllPlayerStats called with:', stats);
+
+      allPlayerStats.clear();
+      Object.entries(stats).forEach(([id, playerData]) => {
+        console.log('[Game] Adding player stats for', id, ':', playerData);
+        allPlayerStats.set(id, playerData);
+      });
+      updateLeaderboard();
+    }
+
+    function updateLeaderboard() {
+      console.log('[Game] updateLeaderboard called');
+      const leaderboardList = document.getElementById('leaderboard-list');
+      leaderboardList.innerHTML = '';
+
+      const allStats = [];
+      console.log('[Game] Building leaderboard - mySocketId:', mySocketId, 'isCharacterSelected:', isCharacterSelected);
+
+      if (mySocketId && isCharacterSelected) {
+        allStats.push({
+          id: mySocketId,
+          name: playerName || CHARACTER_NAMES[selectedCharacter] || 'Me',
+          kills: playerStats.kills,
+          deaths: playerStats.deaths,
+          globalKills: globalStats.kills,
+          globalDeaths: globalStats.deaths,
+          isMe: true
+        });
+      }
+
+      allPlayerStats.forEach((data, id) => {
+        if (id !== mySocketId) {
+          allStats.push({
+            id: id,
+            name: data.name || 'Player',
+            kills: data.kills || 0,
+            deaths: data.deaths || 0,
+            globalKills: data.globalKills || 0,
+            globalDeaths: data.globalDeaths || 0,
+            isMe: false
+          });
+        }
+      });
+
+      allStats.sort((a, b) => {
+        const aKD = a.kills / Math.max(1, a.deaths);
+        const bKD = b.kills / Math.max(1, b.deaths);
+        if (b.kills !== a.kills) return b.kills - a.kills;
+        return bKD - aKD;
+      });
+
+      allStats.forEach((stat, index) => {
+        const item = document.createElement('div');
+        item.className = 'leaderboard-item' + (stat.isMe ? ' me' : '');
+
+        const kd = (stat.kills / Math.max(1, stat.deaths)).toFixed(2);
+        const globalKD = (stat.globalKills / Math.max(1, stat.globalDeaths)).toFixed(2);
+
+        item.innerHTML = `
+          <div class="leaderboard-name">${index + 1}. ${stat.name}</div>
+          <div class="leaderboard-stats">
+            <span class="leaderboard-kills">${stat.kills}K</span>
+            <span class="leaderboard-deaths">${stat.deaths}D</span>
+            <span class="leaderboard-kd">${kd}</span>
+            <span style="color: #999; font-size: 10px;">(${globalKD})</span>
+          </div>
+        `;
+
+        leaderboardList.appendChild(item);
+      });
+    }
+
+    function handleMatchEnd(winnerData, finalStats) {
+      matchEnded = true;
+      console.log('[Game] Match ended! Winner:', winnerData);
+
+      const screen = document.getElementById('match-end-screen');
+      const winnerText = document.getElementById('winner-text');
+      const finalStatsDiv = document.getElementById('final-stats');
+
+      winnerText.textContent = `${winnerData.name} WINS with ${winnerData.kills} kills!`;
+
+      let statsHTML = '<h2 style="text-align: center; color: #ffaa00; margin-bottom: 20px;">Final Standings</h2>';
+
+      const sortedStats = Object.entries(finalStats).sort((a, b) => {
+        return b[1].kills - a[1].kills;
+      });
+
+      sortedStats.forEach(([id, data], index) => {
+        const kd = (data.kills / Math.max(1, data.deaths)).toFixed(2);
+        statsHTML += `
+          <div style="padding: 10px; margin: 5px 0; background: rgba(255,255,255,0.1); border-radius: 5px;">
+            <span style="color: ${id === mySocketId ? '#667eea' : 'white'}; font-weight: bold;">
+              ${index + 1}. ${data.name}
+            </span>
+            <span style="float: right; color: #44ff88;">${data.kills}K</span>
+            <span style="float: right; color: #ff4444; margin-right: 15px;">${data.deaths}D</span>
+            <span style="float: right; color: #ffaa00; margin-right: 15px;">K/D: ${kd}</span>
+          </div>
+        `;
+      });
+
+      finalStatsDiv.innerHTML = statsHTML;
+      screen.style.display = 'flex';
+    }
+
+    function showRestartCountdown(countdown) {
+      const countdownEl = document.getElementById('restart-countdown');
+      countdownEl.textContent = `New match starting in ${countdown}...`;
+      countdownEl.style.display = 'block';
+
+      console.log('[Game] Match restarting in', countdown, 'seconds');
+    }
+
+    function handleMatchRestart() {
+      console.log('[Game] Match restarted! Resetting game...');
+
+      const screen = document.getElementById('match-end-screen');
+      const countdownEl = document.getElementById('restart-countdown');
+      screen.style.display = 'none';
+      countdownEl.style.display = 'none';
+
+      matchEnded = false;
+      playerStats = { kills: 0, deaths: 0, score: 0 };
+      updatePlayerStatsDisplay();
+      updateLeaderboard();
+
+      
+
+      console.log('[Game] Clearing all death markers:', allDeathMarkers.size);
+      allDeathMarkers.forEach((marker, key) => {
+        scene.remove(marker);
+      });
+      allDeathMarkers.clear();
+
+      
+
+      players.forEach(player => {
+        if (player.deathMarker) {
+          player.deathMarker = null;
+          player.deathMarkerKey = null;
+        }
+      });
+
+      blocks.forEach((blockData) => {
+        if (blockData.mesh) scene.remove(blockData.mesh);
+        if (blockData.body) world.removeBody(blockData.body);
+      });
+      blocks.clear();
+
+      bullets.forEach(bullet => {
+        scene.remove(bullet);
+        if (bullet.userData.body) world.removeBody(bullet.userData.body);
+      });
+      bullets = [];
+
+      if (myPlayer && myPlayerBody) {
+        const spawnX = (Math.random() - 0.5) * 40;
+        const spawnZ = (Math.random() - 0.5) * 40;
+        myPlayer.position.set(spawnX, 1, spawnZ);
+        myPlayerBody.position.set(spawnX, 1, spawnZ);
+        myPlayerBody.velocity.set(0, 0, 0);
+
+        const config = CHARACTER_CONFIG[selectedCharacter];
+        myHealth = config ? config.health : 100;
+        updateHealthDisplay();
+      }
+
+      console.log('[Game] Ready for new match!');
     }
 
     
@@ -2014,7 +2648,6 @@
                 type: 'grass',
                 ownerId: mySocketId
               });
-
 
               sendToExtension('GAME_PLACE_BLOCK', {
                 id: blockId,
