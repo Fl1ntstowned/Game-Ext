@@ -15,13 +15,11 @@ chrome.runtime.onStartup.addListener(() => {
   console.log('[Game Extension] Browser startup - service worker active');
 });
 
-// WebSocket proxy (bypasses page CSP restrictions)
-// Import Socket.io from the bundled file
 importScripts('socket.io.min.js');
 
 let backendUrl = null;
-// Store separate socket connection for EACH tab (multiplayer requires this)
-const tabSockets = new Map(); // tabId -> { socket, character }
+
+const tabSockets = new Map(); 
 
 console.log('[Game Background] Socket.io loaded');
 
@@ -30,7 +28,8 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 
   console.log('[Game Background] Message:', message.type, 'from tab:', tabId);
 
-  // Handle GAME_INIT - initialize connection for this tab
+  
+
   if (message.type === 'GAME_INIT') {
     handleGameInit(tabId).then(() => {
       sendResponse({ success: true });
@@ -41,14 +40,16 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     return true;
   }
 
-  // Get this tab's socket
+  
+
   const tabSocket = tabSockets.get(tabId);
   if (!tabSocket || !tabSocket.socket || !tabSocket.socket.connected) {
     sendResponse({ success: false, error: 'Not connected to backend' });
     return true;
   }
 
-  // Handle GAME_SELECT_CHARACTER
+  
+
   if (message.type === 'GAME_SELECT_CHARACTER') {
     tabSocket.socket.emit('selectCharacter', message.character);
     tabSocket.character = message.character;
@@ -57,7 +58,8 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     return true;
   }
 
-  // Handle GAME_SET_PLAYER_NAME
+  
+
   if (message.type === 'GAME_SET_PLAYER_NAME') {
     tabSocket.socket.emit('setPlayerName', message.playerName);
     console.log('[Game Background] Tab', tabId, 'set player name:', message.playerName);
@@ -65,7 +67,8 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     return true;
   }
 
-  // Handle GAME_PLAYER_MOVE
+  
+
   if (message.type === 'GAME_PLAYER_MOVE') {
     tabSocket.socket.emit('playerMove', {
       position: message.position,
@@ -75,19 +78,22 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     return true;
   }
 
-  // Handle GAME_PLAYER_SHOOT
+  
+
   if (message.type === 'GAME_PLAYER_SHOOT') {
     tabSocket.socket.emit('playerShoot', {
       position: message.position,
       direction: message.direction,
-      character: message.character // Pass character for damage/speed calc
+      character: message.character 
+
     });
     console.log('[Game Background] Tab', tabId, 'shot');
     sendResponse({ success: true });
     return true;
   }
 
-  // Handle GAME_PLACE_BLOCK
+  
+
   if (message.type === 'GAME_PLACE_BLOCK') {
     tabSocket.socket.emit('placeBlock', {
       id: message.id,
@@ -99,7 +105,8 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     return true;
   }
 
-  // Handle GAME_DESTROY_BLOCK
+  
+
   if (message.type === 'GAME_DESTROY_BLOCK') {
     tabSocket.socket.emit('destroyBlock', message.id);
     console.log('[Game Background] Tab', tabId, 'destroyed block:', message.id);
@@ -111,14 +118,16 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 async function handleGameInit(tabId) {
   console.log('[Game Background] GAME_INIT for tab:', tabId);
 
-  // Get backend URL from storage
+  
+
   if (!backendUrl) {
     const stored = await chrome.storage.local.get('gameBackendUrl');
     backendUrl = stored.gameBackendUrl || 'http://localhost:3002';
     console.log('[Game Background] Using backend URL:', backendUrl);
   }
 
-  // Check if this tab already has a socket
+  
+
   if (tabSockets.has(tabId)) {
     const existing = tabSockets.get(tabId);
     if (existing.socket && existing.socket.connected) {
@@ -126,7 +135,8 @@ async function handleGameInit(tabId) {
       sendToTab(tabId, { type: 'GAME_CONNECTED' });
       return;
     } else {
-      // Clean up old socket
+      
+
       if (existing.socket) {
         existing.socket.disconnect();
       }
@@ -134,14 +144,16 @@ async function handleGameInit(tabId) {
     }
   }
 
-  // Create NEW socket for this tab
+  
+
   await createSocketForTab(tabId);
 }
 
 async function createSocketForTab(tabId) {
   console.log('[Game Background] Creating socket for tab:', tabId);
 
-  // Socket.io config
+  
+
   const socketConfig = {
     transports: ['websocket', 'polling'],
     reconnection: true,
@@ -152,7 +164,8 @@ async function createSocketForTab(tabId) {
 
   const socket = io(backendUrl, socketConfig);
 
-  // Store socket for this tab
+  
+
   tabSockets.set(tabId, {
     socket: socket,
     character: null
@@ -187,7 +200,8 @@ async function createSocketForTab(tabId) {
     sendToTab(tabId, { type: 'GAME_DISCONNECTED' });
   });
 
-  // Game-specific Socket.io events for this tab
+  
+
   socket.on('yourSocketId', (socketId) => {
     console.log('[Game Background] Tab', tabId, 'received socket ID:', socketId);
     sendToTab(tabId, { type: 'yourSocketId', id: socketId });
@@ -234,7 +248,8 @@ async function sendToTab(tabId, data) {
   } catch (error) {
     console.log('[Game Background] Failed to send to tab', tabId, '- tab may be closed');
 
-    // Clean up socket for this tab
+    
+
     const tabSocket = tabSockets.get(tabId);
     if (tabSocket && tabSocket.socket) {
       tabSocket.socket.disconnect();
@@ -243,7 +258,6 @@ async function sendToTab(tabId, data) {
   }
 }
 
-// Clean up when tabs are closed
 chrome.tabs.onRemoved.addListener((tabId) => {
   const tabSocket = tabSockets.get(tabId);
 

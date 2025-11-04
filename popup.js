@@ -1,4 +1,4 @@
-// ===== GAME EXTENSION POPUP =====
+
 
 const LOCAL_URL = 'http://localhost:3002';
 const PRODUCTION_URL = 'https://backend-ordgame-production.up.railway.app';
@@ -14,7 +14,6 @@ const helpText = document.getElementById('helpText');
 const connectionIndicator = document.getElementById('connectionIndicator');
 const connectionText = document.getElementById('connectionText');
 
-// Initialize on load
 document.addEventListener('DOMContentLoaded', async () => {
   const stored = await chrome.storage.local.get(['gameBackendUrl']);
 
@@ -33,7 +32,6 @@ document.addEventListener('DOMContentLoaded', async () => {
   await testConnection();
 });
 
-// Auto-detect local vs production
 async function detectEnvironment() {
   console.log('[Game Popup] Testing local backend...');
 
@@ -50,7 +48,6 @@ async function detectEnvironment() {
   return PRODUCTION_URL;
 }
 
-// Test if backend is reachable
 async function testBackendHealth(url) {
   try {
     const controller = new AbortController();
@@ -72,7 +69,6 @@ async function testBackendHealth(url) {
   }
 }
 
-// Update button active states
 function updateButtonStates() {
   if (backendUrl === LOCAL_URL) {
     useLocalBtn.classList.add('active');
@@ -85,7 +81,6 @@ function updateButtonStates() {
   }
 }
 
-// Switch to local backend
 useLocalBtn.addEventListener('click', async () => {
   backendUrl = LOCAL_URL;
   backendUrlInput.value = LOCAL_URL;
@@ -97,7 +92,6 @@ useLocalBtn.addEventListener('click', async () => {
   await testConnection();
 });
 
-// Switch to production backend
 useProductionBtn.addEventListener('click', async () => {
   backendUrl = PRODUCTION_URL;
   backendUrlInput.value = PRODUCTION_URL;
@@ -109,13 +103,11 @@ useProductionBtn.addEventListener('click', async () => {
   await testConnection();
 });
 
-// Test connection button
 testBtn.addEventListener('click', async () => {
   showStatus('info', 'Testing connection...');
   await testConnection();
 });
 
-// Test connection to backend
 async function testConnection() {
   connectionText.textContent = 'Testing connection...';
   connectionIndicator.className = 'connection-indicator checking';
@@ -145,7 +137,6 @@ async function testConnection() {
   }
 }
 
-// Show status message
 function showStatus(type, message) {
   statusDiv.innerHTML = `<div class="status ${type}">${message}</div>`;
 }
