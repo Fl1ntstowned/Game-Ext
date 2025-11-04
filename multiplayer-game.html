@@ -148,7 +148,47 @@
       font-weight: bold;
       color: white;
       text-transform: uppercase;
+      margin-bottom: 10px;
     }
+
+    .character-stats {
+      width: 100%;
+      font-size: 11px;
+      color: #ccc;
+      text-align: left;
+    }
+
+    .stat-row {
+      display: flex;
+      align-items: center;
+      margin: 4px 0;
+      gap: 5px;
+    }
+
+    .stat-label {
+      min-width: 60px;
+      font-size: 10px;
+      color: #aaa;
+    }
+
+    .stat-bar-container {
+      flex: 1;
+      height: 8px;
+      background: rgba(0, 0, 0, 0.5);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .stat-bar {
+      height: 100%;
+      border-radius: 4px;
+      transition: width 0.3s;
+    }
+
+    .stat-bar.health { background: linear-gradient(90deg, #ff4444, #ff8888); }
+    .stat-bar.damage { background: linear-gradient(90deg, #ff8800, #ffaa44); }
+    .stat-bar.speed { background: linear-gradient(90deg, #00ff88, #44ffaa); }
+    .stat-bar.firerate { background: linear-gradient(90deg, #4488ff, #88bbff); }
 
     @media (max-width: 768px) {
       #characters-list {
@@ -212,8 +252,6 @@
 
     #crosshair {
       position: fixed;
-      top: 50%;
-      left: 50%;
       transform: translate(-50%, -50%);
       width: 20px;
       height: 20px;
@@ -254,41 +292,42 @@
   </style>
 </head>
 <body>
-  <!-- Loading -->
+  
   <div id="loading">Loading game...</div>
 
-  <!-- UI Container -->
+  
   <div id="ui">
-    <!-- HUD -->
+    
     <div id="hud">
       <div id="health" style="font-size: 20px; font-weight: bold; color: #00ff00;">HP: 100</div>
       <div id="character-name" style="margin-top: 5px;">Character: None</div>
       <div id="player-count" style="margin-top: 10px; color: #44ff88; font-weight: bold;">Players Online: 1</div>
     </div>
 
-    <!-- Player List -->
+    
     <div id="player-list">
       <h3>Players Online</h3>
       <div id="players"></div>
     </div>
 
-    <!-- Controls Help -->
+    
     <div id="controls-help">
       <div><strong>Controls:</strong></div>
       <div>WASD - Move</div>
       <div>SPACE - Jump</div>
       <div>Mouse - Aim</div>
       <div>Left Click - Shoot</div>
-      <div>E - Place Block</div>
-      <div>ESC - Pause</div>
+      <div>E - Toggle Build Mode</div>
+      <div>E (2nd) - Place Block</div>
+      <div>ESC - Cancel Build</div>
     </div>
 
-    <!-- Crosshair -->
+    
     <div id="crosshair"></div>
   </div>
 
-  <!-- Character Selection -->
-  <!-- Player Name Input (shows first) -->
+  
+  
   <div id="name-input-screen">
     <h1>🎮 3D MULTIPLAYER ARENA 🎮</h1>
     <p>Enter your name to track your stats across games</p>
@@ -296,66 +335,112 @@
     <button id="name-submit-btn">START GAME</button>
   </div>
 
-  <!-- Character Selection (shows after name) -->
+  
   <div id="character-selection">
     <h1>Select Your Character</h1>
     <div id="characters-list">
       <button class="character-btn" data-character="soldier">
         <canvas class="character-preview" data-character="soldier"></canvas>
-        <span class="character-name">SOLDIER</span>
+        <span class="character-name">PEPETOSHI</span>
+        <div class="character-stats">
+          <div class="stat-row"><span class="stat-label">Health:</span><div class="stat-bar-container"><div class="stat-bar health" style="width: 92%"></div></div></div>
+          <div class="stat-row"><span class="stat-label">Damage:</span><div class="stat-bar-container"><div class="stat-bar damage" style="width: 83%"></div></div></div>
+          <div class="stat-row"><span class="stat-label">Speed:</span><div class="stat-bar-container"><div class="stat-bar speed" style="width: 70%"></div></div></div>
+          <div class="stat-row"><span class="stat-label">Fire Rate:</span><div class="stat-bar-container"><div class="stat-bar firerate" style="width: 50%"></div></div></div>
+        </div>
       </button>
       <button class="character-btn" data-character="robot">
         <canvas class="character-preview" data-character="robot"></canvas>
-        <span class="character-name">ROBOT</span>
+        <span class="character-name">ACOUSTIC PINKY</span>
+        <div class="character-stats">
+          <div class="stat-row"><span class="stat-label">Health:</span><div class="stat-bar-container"><div class="stat-bar health" style="width: 77%"></div></div></div>
+          <div class="stat-row"><span class="stat-label">Damage:</span><div class="stat-bar-container"><div class="stat-bar damage" style="width: 67%"></div></div></div>
+          <div class="stat-row"><span class="stat-label">Speed:</span><div class="stat-bar-container"><div class="stat-bar speed" style="width: 75%"></div></div></div>
+          <div class="stat-row"><span class="stat-label">Fire Rate:</span><div class="stat-bar-container"><div class="stat-bar firerate" style="width: 67%"></div></div></div>
+        </div>
       </button>
       <button class="character-btn" data-character="ninja">
         <canvas class="character-preview" data-character="ninja"></canvas>
-        <span class="character-name">NINJA</span>
+        <span class="character-name">BENJI</span>
+        <div class="character-stats">
+          <div class="stat-row"><span class="stat-label">Health:</span><div class="stat-bar-container"><div class="stat-bar health" style="width: 62%"></div></div></div>
+          <div class="stat-row"><span class="stat-label">Damage:</span><div class="stat-bar-container"><div class="stat-bar damage" style="width: 56%"></div></div></div>
+          <div class="stat-row"><span class="stat-label">Speed:</span><div class="stat-bar-container"><div class="stat-bar speed" style="width: 100%"></div></div></div>
+          <div class="stat-row"><span class="stat-label">Fire Rate:</span><div class="stat-bar-container"><div class="stat-bar firerate" style="width: 100%"></div></div></div>
+        </div>
       </button>
       <button class="character-btn" data-character="wizard">
         <canvas class="character-preview" data-character="wizard"></canvas>
-        <span class="character-name">WIZARD</span>
+        <span class="character-name">BASED CLOWN</span>
+        <div class="character-stats">
+          <div class="stat-row"><span class="stat-label">Health:</span><div class="stat-bar-container"><div class="stat-bar health" style="width: 69%"></div></div></div>
+          <div class="stat-row"><span class="stat-label">Damage:</span><div class="stat-bar-container"><div class="stat-bar damage" style="width: 100%"></div></div></div>
+          <div class="stat-row"><span class="stat-label">Speed:</span><div class="stat-bar-container"><div class="stat-bar speed" style="width: 65%"></div></div></div>
+          <div class="stat-row"><span class="stat-label">Fire Rate:</span><div class="stat-bar-container"><div class="stat-bar firerate" style="width: 40%"></div></div></div>
+        </div>
       </button>
       <button class="character-btn" data-character="knight">
         <canvas class="character-preview" data-character="knight"></canvas>
-        <span class="character-name">KNIGHT</span>
+        <span class="character-name">SIR WIGGLES</span>
+        <div class="character-stats">
+          <div class="stat-row"><span class="stat-label">Health:</span><div class="stat-bar-container"><div class="stat-bar health" style="width: 100%"></div></div></div>
+          <div class="stat-row"><span class="stat-label">Damage:</span><div class="stat-bar-container"><div class="stat-bar damage" style="width: 56%"></div></div></div>
+          <div class="stat-row"><span class="stat-label">Speed:</span><div class="stat-bar-container"><div class="stat-bar speed" style="width: 60%"></div></div></div>
+          <div class="stat-row"><span class="stat-label">Fire Rate:</span><div class="stat-bar-container"><div class="stat-bar firerate" style="width: 44%"></div></div></div>
+        </div>
       </button>
       <button class="character-btn" data-character="archer">
         <canvas class="character-preview" data-character="archer"></canvas>
-        <span class="character-name">ARCHER</span>
+        <span class="character-name">OC CAM</span>
+        <div class="character-stats">
+          <div class="stat-row"><span class="stat-label">Health:</span><div class="stat-bar-container"><div class="stat-bar health" style="width: 54%"></div></div></div>
+          <div class="stat-row"><span class="stat-label">Damage:</span><div class="stat-bar-container"><div class="stat-bar damage" style="width: 44%"></div></div></div>
+          <div class="stat-row"><span class="stat-label">Speed:</span><div class="stat-bar-container"><div class="stat-bar speed" style="width: 80%"></div></div></div>
+          <div class="stat-row"><span class="stat-label">Fire Rate:</span><div class="stat-bar-container"><div class="stat-bar firerate" style="width: 100%"></div></div></div>
+        </div>
+      </button>
+      <button class="character-btn" data-character="mech">
+        <canvas class="character-preview" data-character="mech"></canvas>
+        <span class="character-name">CHEEKY</span>
+        <div class="character-stats">
+          <div class="stat-row"><span class="stat-label">Health:</span><div class="stat-bar-container"><div class="stat-bar health" style="width: 85%"></div></div></div>
+          <div class="stat-row"><span class="stat-label">Damage:</span><div class="stat-bar-container"><div class="stat-bar damage" style="width: 78%"></div></div></div>
+          <div class="stat-row"><span class="stat-label">Speed:</span><div class="stat-bar-container"><div class="stat-bar speed" style="width: 75%"></div></div></div>
+          <div class="stat-row"><span class="stat-label">Fire Rate:</span><div class="stat-bar-container"><div class="stat-bar firerate" style="width: 62%"></div></div></div>
+        </div>
       </button>
     </div>
   </div>
 
-  <!-- CannonJS Physics Engine (on-chain) -->
+  
   <script src="/content/39df128491c33911ebff0afd1130c8b534311ed5258bbbd29e90ab65e0bf9b2bi0"></script>
 
-  <!-- Game Code -->
+  
   <script type="module">
-    // Import Three.js from on-chain module
+    
     import * as THREE from '/content/a4a6f99205628bdc3ca2143a4e380f7ebc576b4414c16dffdb34be28337ffe83i0';
 
-    // Make THREE available globally BEFORE importing loaders (they need it)
-    // Use Object.assign to copy all properties including non-enumerable ones
+    
+    
     window.THREE = Object.assign({}, THREE);
 
-    // Copy all properties from THREE to ensure we get everything
+    
     Object.getOwnPropertyNames(THREE).forEach(key => {
       if (!(key in window.THREE)) {
         try {
           window.THREE[key] = THREE[key];
         } catch (e) {
-          // Some properties may not be writable
+          
         }
       }
     });
 
-    // Import GLTF, DRACO, and OrbitControls (they will add themselves to window.THREE)
+    
     await import('/content/00ae91a4f7f4f6fa98c1deb0f57359079f7b5299094378ff15fa1c7f4366db3ci0');
     await import('/content/d9f5134fdd4a1ae7a5c3fe1b42876cc4e18f4ce404a39394f9157679c60e965fi0');
     await import('/content/183616632d0baeeaf8bc7bbda1766ea1fb19e76f63fdf136456e075bf19ed08di0');
 
-    // Wait for CannonJS to load
+
     await new Promise(resolve => {
       if (window.CANNON) {
         resolve();
@@ -370,126 +455,169 @@
     });
 
 
-    // ===== GLOBALS =====
+    class SeededRandom {
+      constructor(seed) {
+        this.seed = seed;
+      }
+
+      random() {
+        const x = Math.sin(this.seed++) * 10000;
+        return x - Math.floor(x);
+      }
+    }
+
+    const TERRAIN_SEED = 12345;
+    const seededRandom = new SeededRandom(TERRAIN_SEED);
+
+
     let scene, camera, renderer;
-    let world; // CannonJS physics world
+    let world; 
     let myPlayer = null;
-    let myPlayerBody = null; // Physics body for player
-    let mySocketId = null; // Track our own socket ID to prevent duplicates
+    let myPlayerBody = null; 
+    let mySocketId = null; 
     let myHealth = 100;
     let players = new Map();
     let blocks = new Map();
     let bullets = [];
 
-    // Player controls
+    
     let keys = {};
     let selectedCharacter = null;
     let isCharacterSelected = false;
     let connected = false;
-    let playerName = null; // Player's name for stats tracking
-    let playerStats = { kills: 0, deaths: 0, score: 0 }; // Current session stats
+    let playerName = null; 
+    let playerStats = { kills: 0, deaths: 0, score: 0 }; 
 
-    // Camera controls (FPS-style) - mouse tracking without pointer lock
-    let cameraYaw = 0; // Horizontal rotation (left/right)
-    let cameraPitch = 0.3; // Vertical rotation (up/down)
-    const cameraDistance = 5; // Distance behind player
-    const cameraHeight = 2; // Height above player
-    let mouseX = 0;
-    let mouseY = 0;
+    
+    let cameraYaw = 0; 
+    let cameraPitch = 0.3; 
+    const cameraDistance = 5; 
+    const cameraHeight = 2; 
+    let mouseX = window.innerWidth / 2; 
+    let mouseY = window.innerHeight / 2; 
     let lastMouseX = window.innerWidth / 2;
     let lastMouseY = window.innerHeight / 2;
+    let isAtEdge = { left: false, right: false, top: false, bottom: false }; 
 
-    // CHARACTER CONFIGURATION - Models and Stats
+    
     const CHARACTER_CONFIG = {
       soldier: {
-        model: '/content/1c745ab450f076f8e8d8a262f081429a2ce00656d33dfd550c77268b7802167fi0',
-        health: 120, // Strongest
-        damage: 15, // High damage
-        fireRate: 800, // Slower shooting
-        bulletSpeed: 18, // Slower bullets
-        moveSpeed: 0.14, // Slower movement
+        model: '/content/5c6a56627d1750fcb586605734fa4c3de7170e74a2b98d5692f46c5cb7c4edcci0',
+        health: 120, 
+        damage: 15, 
+        fireRate: 800, 
+        bulletSpeed: 18, 
+        moveSpeed: 0.14, 
         color: 0x556b2f
       },
       robot: {
         model: '/content/c781f4d5a796472b34cc8cad584963a3b293c018d737ef281844a7a326f62cdfi0',
-        health: 100, // Balanced
-        damage: 12, // Balanced damage
-        fireRate: 600, // Balanced
-        bulletSpeed: 20, // Balanced
-        moveSpeed: 0.15, // Balanced
+        health: 100, 
+        damage: 12, 
+        fireRate: 600, 
+        bulletSpeed: 20, 
+        moveSpeed: 0.15, 
         color: 0x808080
       },
       ninja: {
         model: '/content/285f271618ce9c7280e0d165bdfffb4a6b4111ddf638a363d483a42264e98cebi0',
-        health: 80, // Weak
-        damage: 10, // Low damage
-        fireRate: 400, // VERY fast shooting
-        bulletSpeed: 25, // Fast bullets
-        moveSpeed: 0.20, // FASTEST movement
+        health: 80, 
+        damage: 10, 
+        fireRate: 400, 
+        bulletSpeed: 25, 
+        moveSpeed: 0.20, 
         color: 0x2f4f4f
       },
       wizard: {
         model: '/content/1871e1f6f357081de637d08c6a500f4d1f9658b99a0041465afbcbd97247eb20i0',
-        health: 90, // Medium-low
-        damage: 18, // HIGH damage
-        fireRate: 1000, // VERY slow shooting
-        bulletSpeed: 15, // Slow bullets
-        moveSpeed: 0.13, // Slow movement
+        health: 90, 
+        damage: 18, 
+        fireRate: 1000, 
+        bulletSpeed: 15, 
+        moveSpeed: 0.13, 
         color: 0x4b0082
       },
       knight: {
         model: '/content/a056eee27b584653d7a974ba1eb3951a2b11f6368207fbcb5f6fd32df6699677i0',
-        health: 130, // TANKIEST
-        damage: 10, // Low damage
-        fireRate: 900, // Slow shooting
-        bulletSpeed: 16, // Slow bullets
-        moveSpeed: 0.12, // SLOWEST movement
+        health: 130, 
+        damage: 10, 
+        fireRate: 900, 
+        bulletSpeed: 16, 
+        moveSpeed: 0.12, 
         color: 0xc0c0c0
       },
       archer: {
         model: '/content/2e669b2290d6d7c18df10c98d6a4b85dc8cb42fa3387eff4d7bba5554cf966d6i0',
-        health: 70, // WEAKEST
-        damage: 8, // Lowest damage
-        fireRate: 300, // FASTEST shooting
-        bulletSpeed: 30, // FASTEST bullets (longest range)
-        moveSpeed: 0.16, // Fast movement
+        health: 70, 
+        damage: 8, 
+        fireRate: 300, 
+        bulletSpeed: 30, 
+        moveSpeed: 0.16, 
         color: 0x228b22
+      },
+      mech: {
+        model: '/content/7cadbab459a8baa58404292784680d6d8726ac97fa4c24ff4426042bca33ae3bi0',
+        health: 110, 
+        damage: 14, 
+        fireRate: 650, 
+        bulletSpeed: 22, 
+        moveSpeed: 0.15, 
+        color: 0x4a4a4a
       }
     };
 
-    // GLTF Loader setup
+    
     let gltfLoader = null;
-    let loadedModels = new Map(); // Cache loaded models
+    let loadedModels = new Map(); 
 
-    // Movement
+    
     const moveSpeed = 0.15;
     const jumpPower = 0.4;
     let velocity = { x: 0, y: 0, z: 0 };
     let isGrounded = false;
 
-    // Shooting cooldown
+    
     let lastShotTime = 0;
+    let recentShots = []; 
 
-    // Network optimization - throttle position updates
+    
+    let buildMode = false; 
+    let ghostBlock = null; 
+    let raycaster = new THREE.Raycaster(); 
+    let mouseNDC = new THREE.Vector2(0, 0); 
+
+    
     let lastPositionSent = { x: 0, y: 0, z: 0 };
     let lastNetworkUpdate = 0;
-    const NETWORK_UPDATE_INTERVAL = 50; // Send updates every 50ms (20 per second)
+    const NETWORK_UPDATE_INTERVAL = 50; 
 
-    // postMessage request tracking
+    
     let messageRequestId = 0;
     const pendingRequests = new Map();
 
-    // ===== CHARACTER COLORS =====
+    
     const CHARACTER_COLORS = {
       soldier: 0x00ff00,
       robot: 0x888888,
       ninja: 0x000000,
       wizard: 0x9900ff,
       knight: 0xffaa00,
-      archer: 0x00ffff
+      archer: 0x00ffff,
+      mech: 0x4a4a4a
     };
 
-    // ===== POSTMESSAGE COMMUNICATION =====
+    
+    const CHARACTER_NAMES = {
+      soldier: 'PepeToshi',
+      robot: 'Acoustic Pinky',
+      ninja: 'Benji',
+      wizard: 'Based Clown',
+      knight: 'Sir Wiggles',
+      archer: 'OC Cam',
+      mech: 'Cheeky'
+    };
+
+    
     function sendToExtension(type, data = {}) {
       return new Promise((resolve, reject) => {
         const requestId = ++messageRequestId;
@@ -497,7 +625,7 @@
 
         const message = { type: type, requestId: requestId, ...data };
 
-        // Send to all window contexts (for sandboxed iframes)
+        
         window.postMessage(message, '*');
         if (window.parent && window.parent !== window) {
           window.parent.postMessage(message, '*');
@@ -506,7 +634,7 @@
           window.top.postMessage(message, '*');
         }
 
-        // Timeout after 10 seconds
+        
         setTimeout(() => {
           if (pendingRequests.has(requestId)) {
             pendingRequests.delete(requestId);
@@ -516,12 +644,17 @@
       });
     }
 
-    // Listen for responses from extension
+    
     window.addEventListener('message', (event) => {
       const message = event.data;
       if (!message || !message.type) return;
 
-      // Handle request responses
+      
+      if (message.type.startsWith('GAME_')) {
+        console.log('[Game] Received message:', message.type, message);
+      }
+
+      
       if (message.requestId && pendingRequests.has(message.requestId)) {
         const { resolve } = pendingRequests.get(message.requestId);
         pendingRequests.delete(message.requestId);
@@ -529,7 +662,7 @@
         return;
       }
 
-      // Handle server notifications (no requestId)
+      
       switch (message.type) {
         case 'GAME_CONNECTED':
           connected = true;
@@ -566,32 +699,39 @@
           break;
 
         case 'GAME_BLOCK_PLACED':
-          placeBlock(message.block);
+          console.log('[Game] Received GAME_BLOCK_PLACED:', message.block);
+          
+          if (message.block && !blocks.has(message.block.id)) {
+            placeBlock(message.block);
+          } else {
+            console.log('[Game] Block already exists, skipping duplicate placement');
+          }
           break;
 
         case 'GAME_BLOCK_DESTROYED':
+          console.log('[Game] Received GAME_BLOCK_DESTROYED:', message.id);
           destroyBlock(message.id);
           break;
       }
     });
 
-    // ===== INITIALIZATION =====
+    
     function init() {
 
-      // Setup NAME INPUT handler
+      
       const nameInput = document.getElementById('player-name-input');
       const nameSubmitBtn = document.getElementById('name-submit-btn');
 
-      // Submit name on button click or Enter key
+      
       const submitName = () => {
         const name = nameInput.value.trim();
         if (name.length > 0) {
           playerName = name;
-          // Hide name screen, show character selection
+          
           document.getElementById('name-input-screen').style.display = 'none';
           document.getElementById('character-selection').style.display = 'flex';
 
-          // Load character previews NOW that the screen is visible
+          
           setTimeout(() => loadCharacterPreviews(), 100);
         } else {
           alert('Please enter a name!');
@@ -603,7 +743,7 @@
         if (e.key === 'Enter') submitName();
       });
 
-      // Setup character selection buttons
+      
       document.querySelectorAll('.character-btn').forEach(btn => {
         btn.addEventListener('click', () => {
           const character = btn.getAttribute('data-character');
@@ -611,72 +751,98 @@
         });
       });
 
-      // Initialize CannonJS Physics World
+      
       world = new CANNON.World();
-      world.gravity.set(0, -9.82, 0); // Earth gravity
+      world.gravity.set(0, -9.82, 0); 
       world.broadphase = new CANNON.NaiveBroadphase();
       world.solver.iterations = 10;
 
-      // Initialize GLTF Loader with DRACO support
+      
       const dracoLoader = new window.THREE.DRACOLoader();
       dracoLoader.setDecoderPath('/content/');
 
       gltfLoader = new window.THREE.GLTFLoader();
       gltfLoader.setDRACOLoader(dracoLoader);
 
-      // Scene
+      
       scene = new THREE.Scene();
       scene.background = new THREE.Color(0x87ceeb);
       scene.fog = new THREE.Fog(0x87ceeb, 10, 50);
 
-      // Camera
+      
       camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
       camera.position.set(0, 5, 10);
 
-      // Renderer
+      
       renderer = new THREE.WebGLRenderer({ antialias: true });
       renderer.setSize(window.innerWidth, window.innerHeight);
       renderer.shadowMap.enabled = true;
       renderer.shadowMap.type = THREE.PCFSoftShadowMap;
       document.body.appendChild(renderer.domElement);
 
-      // Mouse movement controls camera rotation (works in iframes without pointer lock)
+      
+      const crosshair = document.getElementById('crosshair');
+      if (crosshair) {
+        crosshair.style.left = (window.innerWidth / 2) + 'px';
+        crosshair.style.top = (window.innerHeight / 2) + 'px';
+      }
+
+      
       let mouseMoveCount = 0;
+
       document.addEventListener('mousemove', (e) => {
         if (!myPlayer) return;
 
-        // Get mouse position
+        
         mouseX = e.clientX;
         mouseY = e.clientY;
 
-        // Calculate mouse movement delta
+        
         const deltaX = mouseX - lastMouseX;
         const deltaY = mouseY - lastMouseY;
 
-        // Update last position
+        
         lastMouseX = mouseX;
         lastMouseY = mouseY;
 
-        // Mouse sensitivity
+        
         const sensitivity = 0.003;
 
-        // Update yaw (left/right) and pitch (up/down)
+        
         cameraYaw -= deltaX * sensitivity;
-        cameraPitch += deltaY * sensitivity; // + for non-inverted (mouse up = look up)
+        cameraPitch += deltaY * sensitivity; 
 
-        // Clamp pitch to prevent camera flipping
-        const maxPitch = Math.PI / 2 - 0.1; // Almost straight up
-        const minPitch = -Math.PI / 2 + 0.1; // Almost straight down
-        cameraPitch = Math.max(minPitch, Math.min(maxPitch, cameraPitch));
+        
 
-        // Debug log every 100 moves
+        
+        const edgeThreshold = 100; 
+        const screenWidth = window.innerWidth;
+        const screenHeight = window.innerHeight;
+
+        isAtEdge.left = mouseX < edgeThreshold;
+        isAtEdge.right = mouseX > screenWidth - edgeThreshold;
+        isAtEdge.top = mouseY < edgeThreshold;
+        isAtEdge.bottom = mouseY > screenHeight - edgeThreshold;
+
+        
+        const crosshair = document.getElementById('crosshair');
+        if (crosshair) {
+          crosshair.style.left = mouseX + 'px';
+          crosshair.style.top = mouseY + 'px';
+        }
+
+        
+        mouseNDC.x = (mouseX / window.innerWidth) * 2 - 1;
+        mouseNDC.y = -(mouseY / window.innerHeight) * 2 + 1;
+
+        
         mouseMoveCount++;
         if (mouseMoveCount % 100 === 0) {
           console.log('[Game] Mouse moving - Yaw:', cameraYaw.toFixed(2), 'Pitch:', cameraPitch.toFixed(2));
         }
       });
 
-      // Lights
+      
       const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
       scene.add(ambientLight);
 
@@ -689,28 +855,28 @@
       directionalLight.shadow.camera.bottom = -50;
       scene.add(directionalLight);
 
-      // Environment
+      
       createGround();
       createClouds();
       createTrees();
 
-      // Connect to backend
+      
       connectToBackend();
 
-      // Controls
+      
       setupControls();
 
-      // Remove loading
+      
       document.getElementById('loading').style.display = 'none';
 
-      // Start animation
+      
       animate();
 
-      // Window resize
+      
       window.addEventListener('resize', onWindowResize);
     }
 
-    // ===== ENVIRONMENT =====
+    
     function createGround() {
       const groundSize = 100;
       const groundGeometry = new THREE.PlaneGeometry(groundSize, groundSize);
@@ -720,30 +886,30 @@
       ground.receiveShadow = true;
       scene.add(ground);
 
-      // CREATE PHYSICS BODY FOR GROUND (static - mass 0)
+      
       const groundBody = new CANNON.Body({
-        mass: 0, // Static - won't move
+        mass: 0, 
         shape: new CANNON.Plane()
       });
       groundBody.quaternion.setFromAxisAngle(new CANNON.Vec3(1, 0, 0), -Math.PI / 2);
       world.addBody(groundBody);
 
-      // Grass patches
+
       for (let i = 0; i < 200; i++) {
         const grass = new THREE.Mesh(
           new THREE.BoxGeometry(0.1, 0.5, 0.1),
           new THREE.MeshStandardMaterial({ color: 0x2d5016 })
         );
         grass.position.set(
-          Math.random() * groundSize - groundSize / 2,
+          seededRandom.random() * groundSize - groundSize / 2,
           0.25,
-          Math.random() * groundSize - groundSize / 2
+          seededRandom.random() * groundSize - groundSize / 2
         );
         grass.castShadow = true;
         scene.add(grass);
       }
 
-      // BOUNDARY WALLS - Create sandbox arena
+      
       const wallHeight = 5;
       const wallThickness = 1;
       const wallMaterial = new THREE.MeshStandardMaterial({
@@ -751,7 +917,7 @@
         roughness: 0.9
       });
 
-      // North wall
+      
       const northWall = new THREE.Mesh(
         new THREE.BoxGeometry(groundSize, wallHeight, wallThickness),
         wallMaterial
@@ -761,7 +927,7 @@
       northWall.receiveShadow = true;
       scene.add(northWall);
 
-      // South wall
+      
       const southWall = new THREE.Mesh(
         new THREE.BoxGeometry(groundSize, wallHeight, wallThickness),
         wallMaterial
@@ -771,7 +937,7 @@
       southWall.receiveShadow = true;
       scene.add(southWall);
 
-      // East wall
+      
       const eastWall = new THREE.Mesh(
         new THREE.BoxGeometry(wallThickness, wallHeight, groundSize),
         wallMaterial
@@ -781,7 +947,7 @@
       eastWall.receiveShadow = true;
       scene.add(eastWall);
 
-      // West wall
+      
       const westWall = new THREE.Mesh(
         new THREE.BoxGeometry(wallThickness, wallHeight, groundSize),
         wallMaterial
@@ -791,8 +957,8 @@
       westWall.receiveShadow = true;
       scene.add(westWall);
 
-      // CREATE PHYSICS BODIES FOR WALLS (static)
-      // North wall physics
+      
+      
       const northWallBody = new CANNON.Body({
         mass: 0,
         shape: new CANNON.Box(new CANNON.Vec3(groundSize / 2, wallHeight / 2, wallThickness / 2))
@@ -800,7 +966,7 @@
       northWallBody.position.set(0, wallHeight / 2, -groundSize / 2);
       world.addBody(northWallBody);
 
-      // South wall physics
+      
       const southWallBody = new CANNON.Body({
         mass: 0,
         shape: new CANNON.Box(new CANNON.Vec3(groundSize / 2, wallHeight / 2, wallThickness / 2))
@@ -808,7 +974,7 @@
       southWallBody.position.set(0, wallHeight / 2, groundSize / 2);
       world.addBody(southWallBody);
 
-      // East wall physics
+      
       const eastWallBody = new CANNON.Body({
         mass: 0,
         shape: new CANNON.Box(new CANNON.Vec3(wallThickness / 2, wallHeight / 2, groundSize / 2))
@@ -816,7 +982,7 @@
       eastWallBody.position.set(groundSize / 2, wallHeight / 2, 0);
       world.addBody(eastWallBody);
 
-      // West wall physics
+      
       const westWallBody = new CANNON.Body({
         mass: 0,
         shape: new CANNON.Box(new CANNON.Vec3(wallThickness / 2, wallHeight / 2, groundSize / 2))
@@ -831,13 +997,13 @@
         const cloud = new THREE.Group();
         for (let j = 0; j < 5; j++) {
           const puff = new THREE.Mesh(
-            new THREE.SphereGeometry(Math.random() * 2 + 1, 8, 8),
+            new THREE.SphereGeometry(seededRandom.random() * 2 + 1, 8, 8),
             new THREE.MeshStandardMaterial({ color: 0xffffff, transparent: true, opacity: 0.8 })
           );
-          puff.position.set((Math.random() - 0.5) * 4, (Math.random() - 0.5) * 2, (Math.random() - 0.5) * 4);
+          puff.position.set((seededRandom.random() - 0.5) * 4, (seededRandom.random() - 0.5) * 2, (seededRandom.random() - 0.5) * 4);
           cloud.add(puff);
         }
-        cloud.position.set(Math.random() * 80 - 40, Math.random() * 10 + 15, Math.random() * 80 - 40);
+        cloud.position.set(seededRandom.random() * 80 - 40, seededRandom.random() * 10 + 15, seededRandom.random() * 80 - 40);
         scene.add(cloud);
       }
     }
@@ -846,7 +1012,7 @@
       for (let i = 0; i < 30; i++) {
         const tree = new THREE.Group();
 
-        // Trunk
+
         const trunk = new THREE.Mesh(
           new THREE.CylinderGeometry(0.3, 0.4, 3, 8),
           new THREE.MeshStandardMaterial({ color: 0x8b4513 })
@@ -855,7 +1021,7 @@
         trunk.castShadow = true;
         tree.add(trunk);
 
-        // Leaves
+
         const leaves = new THREE.Mesh(
           new THREE.SphereGeometry(1.5, 8, 8),
           new THREE.MeshStandardMaterial({ color: 0x228b22 })
@@ -865,24 +1031,24 @@
         tree.add(leaves);
 
         tree.position.set(
-          Math.random() * 80 - 40,
+          seededRandom.random() * 80 - 40,
           0,
-          Math.random() * 80 - 40
+          seededRandom.random() * 80 - 40
         );
 
         scene.add(tree);
       }
     }
 
-    // ===== CHARACTER PREVIEWS =====
+    
     async function loadCharacterPreviews() {
-      const characters = ['soldier', 'robot', 'ninja', 'wizard', 'knight', 'archer'];
+      const characters = ['soldier', 'robot', 'ninja', 'wizard', 'knight', 'archer', 'mech'];
 
       for (const char of characters) {
         const canvas = document.querySelector(`.character-preview[data-character="${char}"]`);
         if (!canvas) continue;
 
-        // Get actual canvas size
+        
         const rect = canvas.getBoundingClientRect();
         const size = Math.min(rect.width, 200);
 
@@ -906,7 +1072,7 @@
 
         const model = await createCharacter(char);
         model.position.set(0, -1, 0);
-        model.rotation.y = Math.PI; // Rotate 180 degrees to face forward
+        model.rotation.y = Math.PI; 
         previewScene.add(model);
 
         function animatePreview() {
@@ -918,7 +1084,7 @@
       }
     }
 
-    // ===== CHARACTER CREATION =====
+    
     async function createCharacter(characterType) {
       const config = CHARACTER_CONFIG[characterType];
       if (!config) return createFallbackCharacter(characterType);
@@ -955,13 +1121,13 @@
       });
     }
 
-    // Fallback character (simple geometry) if GLTF fails
+    
     function createFallbackCharacter(characterType) {
       const group = new THREE.Group();
       const config = CHARACTER_CONFIG[characterType] || {};
       const color = config.color || 0xff0000;
 
-      // Simple cylinder body
+      
       const body = new THREE.Mesh(
         new THREE.CylinderGeometry(0.3, 0.3, 1.5, 8),
         new THREE.MeshStandardMaterial({ color })
@@ -970,7 +1136,7 @@
       body.castShadow = true;
       group.add(body);
 
-      // Head
+      
       const head = new THREE.Mesh(
         new THREE.SphereGeometry(0.4, 16, 16),
         new THREE.MeshStandardMaterial({ color })
@@ -982,7 +1148,7 @@
       return group;
     }
 
-    // ===== BACKEND CONNECTION =====
+    
     async function connectToBackend() {
       try {
         const response = await sendToExtension('GAME_INIT');
@@ -992,65 +1158,75 @@
       }
     }
 
-    // ===== CHARACTER SELECTION =====
+    
     async function selectCharacter(character) {
+      console.log('[Game] Selecting character:', character);
+
+      
+      if (!CHARACTER_CONFIG[character]) {
+        console.error('[Game] Character not found in config:', character);
+        return;
+      }
+
       selectedCharacter = character;
       isCharacterSelected = true;
+      console.log('[Game] Character config:', CHARACTER_CONFIG[character]);
 
-      // Hide selection screen
+      
       document.getElementById('character-selection').style.display = 'none';
 
-      // Create player visual (AWAIT the GLTF load)
+      
       myPlayer = await createCharacter(character);
       myPlayer.position.set(0, 1, 0);
-      myPlayer.rotation.y = 0; // Face default forward direction
+      myPlayer.rotation.y = 0; 
       scene.add(myPlayer);
 
-      // Set character-specific health
+      
       const config = CHARACTER_CONFIG[character];
       myHealth = config.health;
       updateHealthDisplay();
 
-      // Create player physics body (cylinder shape for better collision)
-      const playerShape = new CANNON.Cylinder(0.5, 0.5, 2, 8); // radius, radius, height, segments
+      
+      const playerShape = new CANNON.Cylinder(0.5, 0.5, 2, 8); 
       myPlayerBody = new CANNON.Body({
-        mass: 5, // Give it mass so it can be hit
+        mass: 5, 
         position: new CANNON.Vec3(0, 1, 0),
         shape: playerShape,
-        linearDamping: 0.9, // Add damping for smoother movement
+        linearDamping: 0.9, 
         angularDamping: 0.9
       });
-      myPlayerBody.fixedRotation = true; // Don't let physics rotate the player
+      myPlayerBody.fixedRotation = true; 
       myPlayerBody.updateMassProperties();
       world.addBody(myPlayerBody);
 
       console.log('[Game] Player physics body created');
       console.log('[Game] Mouse controls enabled - move mouse to aim');
 
-      // Notify backend via extension
+      
       try {
         await sendToExtension('GAME_SELECT_CHARACTER', { character });
         console.log('[Game] Selected:', character);
 
-        // Send player name to backend if set
+        
         if (playerName) {
           await sendToExtension('GAME_SET_PLAYER_NAME', { playerName });
           console.log('[Game] Sent player name to backend:', playerName);
         }
 
-        // Update character name in HUD
-        document.getElementById('character-name').textContent = `${playerName || character.toUpperCase()}`;
+        
+        const displayName = CHARACTER_NAMES[character] || character;
+        document.getElementById('character-name').textContent = `${displayName}`;
       } catch (error) {
         console.error('[Game] Failed to select character:', error);
       }
     }
 
-    // ===== GAME STATE =====
+
     function updateGameState(state) {
-      // Update all other players (myPlayer is already created when character selected)
+
       if (state.players && Array.isArray(state.players)) {
         state.players.forEach(p => {
-          // CRITICAL: Skip ourselves!
+
           if (p.id === mySocketId) {
             console.log('[Game] Skipping self in gameState:', p.id);
             return;
@@ -1063,11 +1239,21 @@
         });
       }
 
+      if (state.blocks && Array.isArray(state.blocks)) {
+        console.log('[Game] Received', state.blocks.length, 'blocks in game state');
+        state.blocks.forEach(block => {
+          if (!blocks.has(block.id)) {
+            console.log('[Game] Adding existing block from game state:', block.id);
+            placeBlock(block);
+          }
+        });
+      }
+
       updatePlayerList();
     }
 
     async function addPlayer(id, character, playerName = null) {
-      // CRITICAL: Don't add ourselves as another player!
+      
       if (id === mySocketId) {
         console.log('[Game] Skipping addPlayer for self:', id);
         return;
@@ -1080,17 +1266,18 @@
 
       console.log('[Game] Adding player:', id, character, playerName);
 
-      // Load the character model (AWAIT)
+      
       const player = await createCharacter(character);
       scene.add(player);
 
-      // Create floating name label above player's head
-      const nameLabel = createNameLabel(playerName || character);
-      nameLabel.position.set(0, 3, 0); // Above the player
-      player.add(nameLabel); // Attach to player so it follows
+      
+      const displayName = playerName || CHARACTER_NAMES[character] || character;
+      const nameLabel = createNameLabel(displayName);
+      nameLabel.position.set(0, 3, 0); 
+      player.add(nameLabel); 
 
-      // OTHER PLAYERS ARE VISUAL ONLY - NO PHYSICS BODY!
-      // Only your own player has physics. Other players sync directly from network.
+      
+      
       players.set(id, {
         model: player,
         nameLabel: nameLabel,
@@ -1103,18 +1290,18 @@
       updatePlayerCount();
     }
 
-    // Create floating name label (THREE.js Sprite with text)
+    
     function createNameLabel(name) {
       const canvas = document.createElement('canvas');
       const context = canvas.getContext('2d');
       canvas.width = 256;
       canvas.height = 64;
 
-      // Background
+      
       context.fillStyle = 'rgba(0, 0, 0, 0.7)';
       context.fillRect(0, 0, canvas.width, canvas.height);
 
-      // Text
+      
       context.font = 'Bold 28px Arial';
       context.fillStyle = 'white';
       context.textAlign = 'center';
@@ -1134,7 +1321,7 @@
       if (player) {
         scene.remove(player.model);
 
-        // Clean up physics body if it exists (shouldn't for other players, but just in case)
+        
         if (player.body) {
           world.removeBody(player.body);
         }
@@ -1150,25 +1337,25 @@
       const player = players.get(id);
       if (!player) return;
 
-      // Set target position for smooth interpolation
+      
       player.targetPosition = { x: pos.x, y: pos.y, z: pos.z };
       if (rot) {
         player.targetRotation = { x: rot.x, y: rot.y, z: rot.z };
       }
     }
 
-    // Interpolate other players' positions for smooth movement
+    
     function interpolatePlayers() {
-      // SHOOTING GAME = NEED ACCURACY! High lerp factor for near-instant updates
-      const lerpFactor = 0.85; // 0.85 = very fast, accurate position sync
+      
+      const lerpFactor = 0.85; 
 
       players.forEach((player, id) => {
-        // Smoothly move toward target position
+        
         player.model.position.x += (player.targetPosition.x - player.model.position.x) * lerpFactor;
         player.model.position.y += (player.targetPosition.y - player.model.position.y) * lerpFactor;
         player.model.position.z += (player.targetPosition.z - player.model.position.z) * lerpFactor;
 
-        // Smoothly rotate toward target
+        
         player.model.rotation.x += (player.targetRotation.x - player.model.rotation.x) * lerpFactor;
         player.model.rotation.y += (player.targetRotation.y - player.model.rotation.y) * lerpFactor;
         player.model.rotation.z += (player.targetRotation.z - player.model.rotation.z) * lerpFactor;
@@ -1181,13 +1368,14 @@
       players.forEach((data, id) => {
         const div = document.createElement('div');
         div.className = 'player-item';
-        div.textContent = data.playerName || data.character;
+        const displayName = data.playerName || CHARACTER_NAMES[data.character] || data.character;
+        div.textContent = displayName;
         list.appendChild(div);
       });
     }
 
     function updatePlayerCount() {
-      const totalPlayers = players.size + 1; // +1 for yourself
+      const totalPlayers = players.size + 1; 
       const countEl = document.getElementById('player-count');
       if (countEl) {
         countEl.textContent = `Players Online: ${totalPlayers}`;
@@ -1195,31 +1383,57 @@
       console.log('[Game] Player count updated:', totalPlayers);
     }
 
-    // ===== MOVEMENT =====
+    
     function updateMovement() {
       if (!myPlayerBody || !isCharacterSelected) return;
 
-      // Get character-specific movement speed
+      
+      const edgeRotationSpeed = 0.02; 
+      if (isAtEdge.left) {
+        cameraYaw += edgeRotationSpeed; 
+      }
+      if (isAtEdge.right) {
+        cameraYaw -= edgeRotationSpeed; 
+      }
+      if (isAtEdge.top) {
+        cameraPitch -= edgeRotationSpeed * 0.5; 
+      }
+      if (isAtEdge.bottom) {
+        cameraPitch += edgeRotationSpeed * 0.5; 
+      }
+
+      
+      const maxPitch = Math.PI / 2 - 0.01; 
+      const minPitch = -Math.PI / 2 + 0.01; 
+      cameraPitch = Math.max(minPitch, Math.min(maxPitch, cameraPitch));
+
+      
+      if (isAtEdge.left || isAtEdge.right || isAtEdge.top || isAtEdge.bottom) {
+        mouseNDC.x = (mouseX / window.innerWidth) * 2 - 1;
+        mouseNDC.y = -(mouseY / window.innerHeight) * 2 + 1;
+      }
+
+      
       const config = CHARACTER_CONFIG[selectedCharacter];
       const charMoveSpeed = config ? config.moveSpeed : 0.15;
-      const moveForce = charMoveSpeed * 100; // Convert to velocity
+      const moveForce = charMoveSpeed * 100; 
 
-      // Get camera direction vectors for FPS-style movement
+      
       const forward = new THREE.Vector3();
       const right = new THREE.Vector3();
 
-      // Get camera's forward direction (project onto XZ plane for horizontal movement)
+      
       camera.getWorldDirection(forward);
-      forward.y = 0; // Keep movement horizontal
+      forward.y = 0; 
       forward.normalize();
 
-      // Get camera's right direction (cross product of up and forward)
+      
       right.crossVectors(camera.up, forward).normalize();
 
-      // Calculate movement vector based on WASD and camera direction
+      
       const moveDirection = new THREE.Vector3(0, 0, 0);
 
-      // W/S - Move forward/backward relative to camera
+      
       if (keys['w'] || keys['W']) {
         moveDirection.add(forward);
       }
@@ -1227,7 +1441,7 @@
         moveDirection.sub(forward);
       }
 
-      // A/D - Strafe left/right relative to camera
+      
       if (keys['a'] || keys['A']) {
         moveDirection.add(right);
       }
@@ -1235,40 +1449,40 @@
         moveDirection.sub(right);
       }
 
-      // Normalize and apply speed
+      
       if (moveDirection.length() > 0) {
         moveDirection.normalize();
         myPlayerBody.velocity.x = moveDirection.x * moveForce;
         myPlayerBody.velocity.z = moveDirection.z * moveForce;
 
-        // Rotate player model to face movement direction
+        
         const angle = Math.atan2(moveDirection.x, moveDirection.z);
-        myPlayer.rotation.y = angle; // Face the direction of movement
+        myPlayer.rotation.y = angle; 
       } else {
-        // No movement - stop horizontal velocity
+        
         myPlayerBody.velocity.x = 0;
         myPlayerBody.velocity.z = 0;
       }
 
-      // Jump
+      
       if (keys[' '] && Math.abs(myPlayerBody.velocity.y) < 0.1) {
-        myPlayerBody.velocity.y = 8; // Jump impulse
+        myPlayerBody.velocity.y = 8; 
       }
 
-      // BOUNDARY COLLISION - Keep player inside arena
+      
       const boundary = 48;
       if (myPlayerBody.position.x > boundary) myPlayerBody.position.x = boundary;
       if (myPlayerBody.position.x < -boundary) myPlayerBody.position.x = -boundary;
       if (myPlayerBody.position.z > boundary) myPlayerBody.position.z = boundary;
       if (myPlayerBody.position.z < -boundary) myPlayerBody.position.z = -boundary;
 
-      // Check if grounded
+      
       isGrounded = Math.abs(myPlayerBody.velocity.y) < 0.1 && myPlayerBody.position.y <= 1.1;
 
-      // Send to backend - THROTTLED for performance (only every 50ms)
+      
       const now = Date.now();
       if (connected && (now - lastNetworkUpdate) >= NETWORK_UPDATE_INTERVAL) {
-        // Check if position changed significantly (at least 0.01 units)
+        
         const dx = Math.abs(myPlayerBody.position.x - lastPositionSent.x);
         const dy = Math.abs(myPlayerBody.position.y - lastPositionSent.y);
         const dz = Math.abs(myPlayerBody.position.z - lastPositionSent.z);
@@ -1284,86 +1498,142 @@
           sendToExtension('GAME_PLAYER_MOVE', {
             position: lastPositionSent,
             rotation: { x: myPlayer.rotation.x, y: myPlayer.rotation.y, z: myPlayer.rotation.z }
-          }).catch(() => {}); // Ignore errors for movement updates
+          }).catch(() => {}); 
         }
       }
 
-      // Camera follow - FPS style, position camera behind player based on yaw/pitch
+      
       if (myPlayer) {
-        // Calculate camera position based on yaw and pitch
-        const offsetX = Math.sin(cameraYaw) * Math.cos(cameraPitch) * cameraDistance;
-        const offsetY = Math.sin(cameraPitch) * cameraDistance + cameraHeight;
-        const offsetZ = Math.cos(cameraYaw) * Math.cos(cameraPitch) * cameraDistance;
+        
+        const offsetX = Math.sin(cameraYaw) * cameraDistance;
+        const offsetZ = Math.cos(cameraYaw) * cameraDistance;
 
-        // Position camera behind player
         camera.position.set(
           myPlayer.position.x + offsetX,
-          myPlayer.position.y + offsetY,
+          myPlayer.position.y + cameraHeight,
           myPlayer.position.z + offsetZ
         );
 
-        // Look at point in front of player based on camera direction
-        const lookAtDistance = 10;
-        const lookAtX = myPlayer.position.x - Math.sin(cameraYaw) * Math.cos(cameraPitch) * lookAtDistance;
-        const lookAtY = myPlayer.position.y - Math.sin(cameraPitch) * lookAtDistance + cameraHeight;
-        const lookAtZ = myPlayer.position.z - Math.cos(cameraYaw) * Math.cos(cameraPitch) * lookAtDistance;
+        
+        const lookAtPoint = new THREE.Vector3(
+          myPlayer.position.x - Math.sin(cameraYaw) * 10,
+          myPlayer.position.y + cameraHeight - (cameraPitch * 10), 
+          myPlayer.position.z - Math.cos(cameraYaw) * 10
+        );
 
-        camera.lookAt(lookAtX, lookAtY, lookAtZ);
+        camera.lookAt(lookAtPoint);
       }
     }
 
-    // ===== SHOOTING =====
+    
     function shoot() {
-      if (!myPlayer || !isCharacterSelected || !connected) return;
+      if (!myPlayer || !isCharacterSelected || !connected) {
+        console.log('[Game] Cannot shoot - myPlayer:', !!myPlayer, 'isCharacterSelected:', isCharacterSelected, 'connected:', connected);
+        return;
+      }
 
-      // Apply character-specific fire rate cooldown
+      
       const config = CHARACTER_CONFIG[selectedCharacter];
-      const fireRate = config ? config.fireRate : 600;
+      if (!config) {
+        console.error('[Game] No config found for character:', selectedCharacter);
+        return;
+      }
+
+      const fireRate = config.fireRate;
       const now = Date.now();
 
       if (now - lastShotTime < fireRate) {
-        // Too soon to shoot again!
+        
         return;
       }
 
       lastShotTime = now;
+      console.log('[Game] Shooting with character:', selectedCharacter, 'fireRate:', fireRate);
 
-      // FPS-style shooting: Shoot where camera is looking
-      const direction = new THREE.Vector3();
-      camera.getWorldDirection(direction);
-      direction.y = 0; // Keep shot horizontal
+      
+      
+      raycaster.setFromCamera(mouseNDC, camera);
+      const direction = raycaster.ray.direction.clone();
       direction.normalize();
+
+      
+      recentShots.push({
+        time: now,
+        direction: { x: direction.x, y: direction.y, z: direction.z },
+        position: { x: myPlayer.position.x, y: myPlayer.position.y + 1.5, z: myPlayer.position.z }
+      });
+
+      
+      recentShots = recentShots.filter(shot => now - shot.time < 2000);
 
       sendToExtension('GAME_PLAYER_SHOOT', {
         position: { x: myPlayer.position.x, y: myPlayer.position.y + 1.5, z: myPlayer.position.z },
-        direction: { x: direction.x, y: 0, z: direction.z }, // y=0 for straight horizontal shot
-        character: selectedCharacter // Send character for damage calculation
+        direction: { x: direction.x, y: direction.y, z: direction.z }, 
+        character: selectedCharacter, 
+        ownerId: mySocketId 
       }).catch((error) => {
         console.error('[Game] Failed to shoot:', error);
       });
     }
 
     function createBullet(data) {
-      // Get character-specific bullet speed
+      
       const shooterConfig = CHARACTER_CONFIG[data.character];
       const bulletSpeed = shooterConfig ? shooterConfig.bulletSpeed : 20;
       const bulletDamage = shooterConfig ? shooterConfig.damage : 10;
 
-      // Create visual bullet
+      
+      let bulletOwnerId = data.ownerId || data.playerId || data.socketId;
+
+      
+      if (!bulletOwnerId && recentShots.length > 0) {
+        
+        const now = Date.now();
+        for (const shot of recentShots) {
+          
+          const dirMatch = (
+            Math.abs(shot.direction.x - data.direction.x) < 0.1 &&
+            Math.abs(shot.direction.y - data.direction.y) < 0.1 &&
+            Math.abs(shot.direction.z - data.direction.z) < 0.1
+          );
+
+          
+          const posMatch = data.position && (
+            Math.abs(shot.position.x - data.position.x) < 2 &&
+            Math.abs(shot.position.y - data.position.y) < 2 &&
+            Math.abs(shot.position.z - data.position.z) < 2
+          );
+
+          
+          const timeMatch = (now - shot.time) < 1000;
+
+          if (dirMatch && posMatch && timeMatch) {
+            
+            bulletOwnerId = mySocketId;
+            console.log('[Game] Matched bullet to our recent shot - marking as ours');
+            break;
+          }
+        }
+      }
+
+      const isMyBullet = bulletOwnerId === mySocketId;
+      console.log('[Game] Creating bullet - Owner:', bulletOwnerId, 'IsMyBullet:', isMyBullet);
+
+      
       const bullet = new THREE.Mesh(
         new THREE.SphereGeometry(0.15, 8, 8),
         new THREE.MeshStandardMaterial({ color: 0xffff00, emissive: 0xffff00 })
       );
       bullet.position.set(data.position.x, data.position.y, data.position.z);
 
-      // Create physics body for bullet
+      
       const bulletShape = new CANNON.Sphere(0.15);
       const bulletBody = new CANNON.Body({
-        mass: 0.1, // Light projectile
+        mass: 0.1, 
         shape: bulletShape,
         position: new CANNON.Vec3(data.position.x, data.position.y, data.position.z),
         velocity: new CANNON.Vec3(
-          data.direction.x * bulletSpeed, // Character-specific bullet speed
+          data.direction.x * bulletSpeed, 
           data.direction.y * bulletSpeed,
           data.direction.z * bulletSpeed
         ),
@@ -1371,58 +1641,66 @@
         collisionFilterMask: -1
       });
 
-      // Set up collision detection for this bullet
+      
       bulletBody.addEventListener('collide', (event) => {
         const hitBody = event.body;
 
-        // Check if bullet hit my player
-        if (hitBody === myPlayerBody && data.ownerId !== 'me') {
-          myHealth -= bulletDamage; // Character-specific damage
-          updateHealthDisplay();
-          console.log('[Game] Hit! Damage:', bulletDamage, 'Health:', myHealth);
+        
+        if (hitBody === myPlayerBody) {
+          
+          const bulletOwnerId = data.ownerId || data.playerId || data.socketId;
+          if (bulletOwnerId === mySocketId) {
+            console.log('[Game] Skipping self-damage from own bullet (ownerId:', bulletOwnerId, ')');
+            return;
+          }
 
-          // Remove bullet
+          
+          myHealth -= bulletDamage; 
+          updateHealthDisplay();
+          console.log('[Game] Hit by bullet! Damage:', bulletDamage, 'Health:', myHealth, 'Shooter:', bulletOwnerId);
+
+          
           world.removeBody(bulletBody);
           scene.remove(bullet);
           const bulletIndex = bullets.findIndex(b => b.userData.body === bulletBody);
           if (bulletIndex !== -1) bullets.splice(bulletIndex, 1);
 
-          // Check if dead
+          
           if (myHealth <= 0) {
             handlePlayerDeath();
           }
           return;
         }
 
-        // Check if bullet hit a BLOCK
+        
         blocks.forEach((blockData, blockId) => {
           if (hitBody === blockData.body) {
             console.log('[Game] Bullet hit block:', blockId);
 
-            // Damage the block
+            
             blockData.mesh.userData.health -= 1;
             const health = blockData.mesh.userData.health;
 
-            // Visual feedback - change color based on health
+            
             const healthPercent = health / blockData.mesh.userData.maxHealth;
             if (healthPercent <= 0.25) {
-              blockData.mesh.material.color.setHex(0x330000); // Very dark red
+              blockData.mesh.material.color.setHex(0x330000); 
             } else if (healthPercent <= 0.5) {
-              blockData.mesh.material.color.setHex(0x663300); // Dark brown
+              blockData.mesh.material.color.setHex(0x663300); 
             } else if (healthPercent <= 0.75) {
-              blockData.mesh.material.color.setHex(0x7a4f2f); // Damaged brown
+              blockData.mesh.material.color.setHex(0x7a4f2f); 
             }
 
-            // Destroy block if health reaches 0
+            
             if (health <= 0) {
               console.log('[Game] Block destroyed by bullet:', blockId);
               destroyBlock(blockId);
 
-              // Notify backend to sync block destruction
+              
               sendToExtension('GAME_DESTROY_BLOCK', { id: blockId }).catch(() => {});
             }
 
-            // Remove bullet
+            
             world.removeBody(bulletBody);
             scene.remove(bullet);
             const bulletIndex = bullets.findIndex(b => b.userData.body === bulletBody);
@@ -1431,11 +1709,11 @@
           }
         });
 
-        // Check if hit other players
+        
         players.forEach((playerData, id) => {
           if (playerData.body && hitBody === playerData.body && data.ownerId !== id) {
             console.log('[Game] Bullet hit player:', id);
-            // Other player hit - backend handles their health
+            
           }
         });
       });
@@ -1446,8 +1724,8 @@
         dir: data.direction,
         speed: 0.5,
         id: data.id,
-        ownerId: data.ownerId || null,
-        body: bulletBody // Link physics body
+        ownerId: bulletOwnerId || null, 
+        body: bulletBody 
       };
 
       scene.add(bullet);
@@ -1459,13 +1737,13 @@
         const bullet = bullets[i];
         const bulletBody = bullet.userData.body;
 
-        // Sync visual bullet with physics body
+        
         if (bulletBody && bulletBody.world) {
           bullet.position.copy(bulletBody.position);
           bullet.quaternion.copy(bulletBody.quaternion);
         }
 
-        // Remove bullet if out of bounds or physics body was removed
+        
         if (!bulletBody || !bulletBody.world || bullet.position.length() > 100) {
           if (bulletBody && bulletBody.world) {
             world.removeBody(bulletBody);
@@ -1480,30 +1758,30 @@
       const healthEl = document.getElementById('health');
       healthEl.textContent = `HP: ${myHealth}`;
 
-      // Color based on health
+      
       if (myHealth > 70) {
-        healthEl.style.color = '#00ff00'; // Green
+        healthEl.style.color = '#00ff00'; 
       } else if (myHealth > 30) {
-        healthEl.style.color = '#ffaa00'; // Orange
+        healthEl.style.color = '#ffaa00'; 
       } else {
-        healthEl.style.color = '#ff0000'; // Red
+        healthEl.style.color = '#ff0000'; 
       }
     }
 
     function handlePlayerDeath() {
       console.log('[Game] You died! Respawning...');
 
-      // Increment death count
+      
       playerStats.deaths += 1;
 
-      // Show death screen with stats
+      
       alert(`💀 YOU DIED! 💀\n\nKills: ${playerStats.kills}\nDeaths: ${playerStats.deaths}\nScore: ${playerStats.score}\nK/D Ratio: ${(playerStats.kills / Math.max(1, playerStats.deaths)).toFixed(2)}\n\nRespawning...`);
 
-      // Reset health
+      
       myHealth = 100;
       updateHealthDisplay();
 
-      // Respawn at random position
+      
       const respawnX = Math.random() * 40 - 20;
       const respawnZ = Math.random() * 40 - 20;
 
@@ -1513,15 +1791,146 @@
 
       if (myPlayerBody) {
         myPlayerBody.position.set(respawnX, 1, respawnZ);
-        myPlayerBody.velocity.set(0, 0, 0); // Stop all movement
+        myPlayerBody.velocity.set(0, 0, 0); 
       }
     }
 
-    // ===== BUILDING =====
-    function placeBlock(data) {
-      if (blocks.has(data.id)) return;
+    
 
-      // Create visual block
+    
+    function createGhostBlock() {
+      if (ghostBlock) return; 
+
+      
+      const geometry = new THREE.BoxGeometry(1, 1, 1);
+      const material = new THREE.MeshStandardMaterial({
+        color: 0x00ff00,
+        transparent: true,
+        opacity: 0.5,
+        wireframe: false
+      });
+
+      
+      const wireframeGeo = new THREE.EdgesGeometry(geometry);
+      const wireframeMat = new THREE.LineBasicMaterial({ color: 0xffffff, linewidth: 2 });
+      const wireframe = new THREE.LineSegments(wireframeGeo, wireframeMat);
+
+      ghostBlock = new THREE.Mesh(geometry, material);
+      ghostBlock.add(wireframe);
+      ghostBlock.userData.isValid = true; 
+
+      scene.add(ghostBlock);
+      console.log('[Game] Ghost block created');
+    }
+
+    
+    function updateGhostBlock() {
+      if (!ghostBlock || !myPlayer) return;
+
+      
+      raycaster.setFromCamera(mouseNDC, camera);
+
+      
+      const buildableObjects = [];
+      scene.traverse((obj) => {
+        if (obj.isMesh && obj !== ghostBlock && obj !== myPlayer) {
+          
+          buildableObjects.push(obj);
+        }
+      });
+
+      
+      blocks.forEach((blockData) => {
+        if (blockData.mesh && blockData.mesh !== ghostBlock) {
+          buildableObjects.push(blockData.mesh);
+        }
+      });
+
+      const intersects = raycaster.intersectObjects(buildableObjects, false);
+
+      if (intersects.length > 0) {
+        const hit = intersects[0];
+        const hitPoint = hit.point;
+        const hitNormal = hit.normal;
+
+        
+        let placeX = Math.round(hitPoint.x + hitNormal.x * 0.5);
+        let placeY = Math.round(hitPoint.y + hitNormal.y * 0.5);
+        let placeZ = Math.round(hitPoint.z + hitNormal.z * 0.5);
+
+        
+        if (placeY < 0.5) placeY = 0.5;
+
+        
+        ghostBlock.position.set(placeX, placeY, placeZ);
+
+        
+        let isValid = true;
+        let overlapCount = 0;
+        blocks.forEach((blockData) => {
+          const blockPos = blockData.mesh.position;
+          const distance = ghostBlock.position.distanceTo(blockPos);
+          if (distance < 0.5) { 
+            isValid = false;
+            overlapCount++;
+          }
+        });
+
+        
+        if (isValid) {
+          ghostBlock.material.color.setHex(0x00ff00); 
+          ghostBlock.userData.isValid = true;
+        } else {
+          ghostBlock.material.color.setHex(0xff0000); 
+          ghostBlock.userData.isValid = false;
+          console.log('[Game] Ghost block invalid - overlapping with', overlapCount, 'block(s)');
+        }
+      } else {
+        
+        const forward = new THREE.Vector3();
+        camera.getWorldDirection(forward);
+        forward.y = 0;
+        forward.normalize();
+
+        const placeDistance = 3;
+        ghostBlock.position.set(
+          Math.round(myPlayer.position.x + forward.x * placeDistance),
+          0.5,
+          Math.round(myPlayer.position.z + forward.z * placeDistance)
+        );
+        ghostBlock.material.color.setHex(0x00ff00);
+        ghostBlock.userData.isValid = true;
+      }
+    }
+
+    
+    function removeGhostBlock() {
+      if (ghostBlock) {
+        scene.remove(ghostBlock);
+        ghostBlock = null;
+        console.log('[Game] Ghost block removed');
+      }
+    }
+
+    function placeBlock(data) {
+      console.log('[Game] placeBlock called with data:', data);
+
+      if (!data || !data.id) {
+        console.error('[Game] Invalid block data - missing id:', data);
+        return;
+      }
+
+      if (blocks.has(data.id)) {
+        console.log('[Game] Block already exists with id:', data.id);
+        return;
+      }
+
+      if (!data.position) {
+        console.error('[Game] Invalid block data - missing position:', data);
+        return;
+      }
+
+      
       const block = new THREE.Mesh(
         new THREE.BoxGeometry(1, 1, 1),
         new THREE.MeshStandardMaterial({ color: 0x8b4513 })
@@ -1530,35 +1939,35 @@
       block.castShadow = true;
       block.receiveShadow = true;
 
-      // CREATE PHYSICS BODY FOR BLOCK (so players can jump on it!)
-      const blockShape = new CANNON.Box(new CANNON.Vec3(0.5, 0.5, 0.5)); // Half-extents
+      
+      const blockShape = new CANNON.Box(new CANNON.Vec3(0.5, 0.5, 0.5)); 
       const blockBody = new CANNON.Body({
-        mass: 0, // Static block (doesn't fall)
+        mass: 0, 
         shape: blockShape,
         position: new CANNON.Vec3(data.position.x, data.position.y, data.position.z)
       });
       world.addBody(blockBody);
 
       block.userData = {
-        health: 4, // Takes 4 hits to destroy
+        health: 4, 
         maxHealth: 4,
         id: data.id,
-        body: blockBody // Store physics body reference
+        body: blockBody 
       };
 
       scene.add(block);
       blocks.set(data.id, { mesh: block, body: blockBody });
 
-      console.log('[Game] Block placed at:', data.position);
+      console.log('[Game] Block successfully placed! ID:', data.id, 'Position:', data.position, 'Total blocks:', blocks.size);
     }
 
     function destroyBlock(id) {
       const blockData = blocks.get(id);
       if (blockData) {
-        // Remove visual mesh
+        
         scene.remove(blockData.mesh);
 
-        // Remove physics body
+        
         if (blockData.body) {
           world.removeBody(blockData.body);
         }
@@ -1568,30 +1977,80 @@
       }
     }
 
-    // ===== CONTROLS =====
+    
     function setupControls() {
       window.addEventListener('keydown', (e) => {
+        
+        if (e.repeat) {
+          
+          keys[e.key] = true;
+          return;
+        }
+
         keys[e.key] = true;
 
-        // E key to place block in front of player
+        
         if ((e.key === 'e' || e.key === 'E') && isCharacterSelected && myPlayer && connected) {
-          const placeDistance = 2;
-          const placeX = Math.round(myPlayer.position.x);
-          const placeY = Math.round(myPlayer.position.y); // Same height as player
-          const placeZ = Math.round(myPlayer.position.z - placeDistance); // In front of player
+          if (!buildMode) {
+            
+            buildMode = true;
+            createGhostBlock();
+            console.log('[Game] Build mode ON - move mouse to position, press E again to place');
+          } else {
+            
+            console.log('[Game] E pressed in build mode. Ghost exists:', !!ghostBlock, 'Valid:', ghostBlock?.userData?.isValid);
 
-          sendToExtension('GAME_PLACE_BLOCK', {
-            position: { x: placeX, y: placeY, z: placeZ },
-            type: 'grass'
-          }).catch((error) => {
-            console.error('[Game] Failed to place block:', error);
-          });
+            if (ghostBlock && ghostBlock.userData.isValid) {
+              const pos = ghostBlock.position;
+              console.log('[Game] Placing block at:', { x: pos.x, y: pos.y, z: pos.z });
+
+              
+              const blockId = `block_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+
+              
+              placeBlock({
+                id: blockId,
+                position: { x: pos.x, y: pos.y, z: pos.z },
+                type: 'grass',
+                ownerId: mySocketId
+              });
+
+
+              sendToExtension('GAME_PLACE_BLOCK', {
+                id: blockId,
+                position: { x: pos.x, y: pos.y, z: pos.z },
+                blockType: 'grass'
+              }).then((response) => {
+                console.log('[Game] Block placement request sent successfully, response:', response);
+              }).catch((error) => {
+                console.error('[Game] Failed to send block placement:', error);
+                
+                destroyBlock(blockId);
+              });
+            } else if (!ghostBlock) {
+              console.log('[Game] Cannot place block - ghost block does not exist');
+            } else if (!ghostBlock.userData.isValid) {
+              console.log('[Game] Cannot place block - invalid position (red = overlapping)');
+            }
+
+            
+            buildMode = false;
+            removeGhostBlock();
+            console.log('[Game] Build mode OFF');
+          }
+        }
+
+        
+        if (e.key === 'Escape' && buildMode) {
+          buildMode = false;
+          removeGhostBlock();
+          console.log('[Game] Build mode cancelled');
         }
       });
 
       window.addEventListener('keyup', (e) => { keys[e.key] = false; });
 
-      // Left click to shoot
+      
       window.addEventListener('click', (e) => {
         if (isCharacterSelected) {
           shoot();
@@ -1599,22 +2058,22 @@
       });
     }
 
-    // ===== ANIMATION =====
-    const timeStep = 1 / 60; // 60 FPS physics
+    
+    const timeStep = 1 / 60; 
     function animate() {
       requestAnimationFrame(animate);
 
-      // Step physics world
+      
       if (world) {
         world.step(timeStep);
 
-        // Sync my player visual with physics body
+        
         if (myPlayer && myPlayerBody) {
           myPlayer.position.copy(myPlayerBody.position);
           myPlayer.quaternion.copy(myPlayerBody.quaternion);
         }
 
-        // Sync other players' visuals with physics bodies
+        
         players.forEach((playerData) => {
           if (playerData.body) {
             playerData.model.position.copy(playerData.body.position);
@@ -1623,20 +2082,25 @@
       }
 
       updateMovement();
-      interpolatePlayers(); // Smooth other players' movement
+      interpolatePlayers(); 
       updateBullets();
+
+      
+      if (buildMode && ghostBlock) {
+        updateGhostBlock();
+      }
 
       renderer.render(scene, camera);
     }
 
-    // ===== RESIZE =====
+    
     function onWindowResize() {
       camera.aspect = window.innerWidth / window.innerHeight;
       camera.updateProjectionMatrix();
       renderer.setSize(window.innerWidth, window.innerHeight);
     }
 
-    // ===== START =====
+    
     init();
   </script>
 </body>

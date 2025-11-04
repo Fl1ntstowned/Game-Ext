@@ -90,8 +90,9 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   // Handle GAME_PLACE_BLOCK
   if (message.type === 'GAME_PLACE_BLOCK') {
     tabSocket.socket.emit('placeBlock', {
+      id: message.id,
       position: message.position,
-      type: message.blockType || 'grass'
+      blockType: message.blockType || 'grass'
     });
     console.log('[Game Background] Tab', tabId, 'placed block');
     sendResponse({ success: true });
